@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="/static/image/favicon.ico">
+    <link rel="stylesheet" text="text/css" href="/static/styles/{% block style %}{% endblock %}" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!--navigation bar-->
+    <div class="navigation_div">
+      <img src="/static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+      <div class="navigation_link">
+        <a href="/">HOME</a>
+        <a href="/sportsbooking">SPORTS</a>
+        <a href="/classbooking">CLASS</a>
+        <a href="/booking">MY BOOKING</a>
+        <a href="/account">MY ACCOUNT</a>
+        <a href="/logout">LOG OUT</a>
+        <a href="/login">LOG IN</a>
+      </div>
+    </div>
+
+    <div class="cart-item">
+        <p>
+            You have <span id="item"></span> item in the shopping cart
+        </p>
+        <table id="items" class="table item-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </thead>
+        </table>
+    </div>
+    <div class="cart-commands">
+        <button id="next">Next</button>
+    </div>
+
+    <div class="footer">
+      <img src="/static/image/logo.PNG" alt="Logo" class="footer__logo" />
+      <div class="list">
+        <div class="title">Services</div>
+        <a href="/sportsbooking" class="list__link">Sports Booking</a>
+        <a href="/classbooking" class="list__link">Class Booking</a>
+        <a href="/membership" class="list__link">Membership</a>
+      </div>
+
+      <div class="list">
+        <div class="title">Contact Us</div>
+        <a href="" class="list__link">Facebook</a>
+        <a href="" class="list__link">Instagram</a>
+        <a href="" class="list__link">Twitter</a>
+      </div>
+
+      <div class="copyright">Copyright @40SportsCentre2023</div>
+    </div>
+    <script>    
+        $(document).ready(function(){
+            var items = JSON.parse(localStorage.getItem('cart'));
+            var total = 0;
+            var discount = null;
+            var discount_amount = 0;
+            $.each(items, function(index, item){
+                console.log(item);
+                total = total + item.price;
+                $('#items tbody').append(
+                    "<tr>" +
+                    "<td>" + (index+1) + "</td><td>" +item.item+"</td><td>"+item.price+"</td>" +
+                    '<td><button class="remove" id="remove'+index+'">Remove</button></td>' +
+                    "</tr>"
+                );
+            });
+    
+            $('#next').on('click', function(){
+                        window.location.href = "/checkout";
+            });
+    
+            $('.remove').on('click', function(e){
+                var index = e.target.id.replace('remove','');
+                console.log(index);
+                var cart = JSON.parse(localStorage.getItem('cart'));
+                var newCart = [];
+                $.each(cart, function(i, c){
+                    if(i != index) {
+                        newCart.push(c); 
+                    }
+                });
+                localStorage.setItem('cart', JSON.stringify(newCart));
+    
+                window.location.reload();
+            });
+    
+            console.log(items[0]);
+            if(items[0].type === "Membership") {
+                grand_total = total;            
+            } else {
+                var discount_url = '/discounts/apply?item_type='+items[0].type+'&item_qty='+items.length+'&item_total='+total;
+                $.getJSON(discount_url, function(d){
+                    localStorage.setItem('discount', JSON.stringify(d));
+                    discount = d.discount;
+                    console.log("From:", d);
+                    $('#item').text(items.length);
+                    console.log("Discount:", discount);
+                    if(discount) {
+                        discount_amount = discount.amount;
+                    }
+                    var total_discount = ((total * discount_amount) / 100);
+                    grand_total = total - total_discount;
+                    $('#items tfoot').append(
+                        "<tr>" +
+                        '<th colspan="2">Total</th><th>'+total+'</th><th></th>'+
+                        "</tr>" +
+                        "<tr>" +
+                        '<th colspan="2">Discount</th><th>'+total_discount+'</th><th></th>'+
+                        "</tr>" +
+                        '<th colspan="2">Grand Total</th><th>'+grand_total+'</th><th></th>'+
+                        "</tr>" 
+                    );
+                });
+            }
+        });
+    </script>
+    
+  </body>
+</html>

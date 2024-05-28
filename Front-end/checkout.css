@@ -1,0 +1,334 @@
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+/*****************/
+/*NAVIGATION BAR*/
+/*****************/
+.navigation_div {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* position: fixed; */
+}
+
+#logo {
+  width: 8%;
+  height: 8%;
+  padding-left: 40px;
+}
+.navigation_div .navigation_link a {
+  color: white;
+  padding: 20px;
+  text-decoration: none;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 17px;
+}
+
+.navigation_div .navigation_link {
+  margin: 5px 30px 5px 30px;
+  display: flex;
+}
+
+
+/*****************/
+/*Checkout Page show*/
+/*****************/
+.checkoutpage__outerdiv {
+  width: 100%;
+  height: 850px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color:#1e1e1e;
+}
+
+.checkoutInfopage__div {
+  position: absolute;
+  top: 10px;
+  left: 40px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10 px;
+  width: 100%;
+
+}
+
+ .Information__div {
+  position: absolute;
+  height: 700px;
+  width: 95%;
+  left:40px;
+  top: 150px;
+  display: inline-block;
+  flex-direction: column;
+  background-color: #1e1e1e;
+} 
+
+#checkoutinfo__word {
+  position: absolute;
+  top: 10px;
+  left: 42%;
+  font-size: 40px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  padding-top: 20px;
+  color: #ffffff;
+}
+
+#enterdetail_word {
+  position: absolute;
+  top: 100px;
+  left: 40px;
+  font-size: 25px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  padding-top: 20px;
+  color: #ffffff;
+}
+
+.input-title {
+  margin-bottom: 10px; /* Add some margin below the input title */
+}
+
+ .details__text {
+  position: relative;
+  top: 30px;
+  width:35%;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+  "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #ffffff;
+} 
+
+.details__input1{
+  top: 100px;
+  width: 100%;
+  height: 25px;
+  font-size: 16px;
+  text-indent: 2%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.details__input{
+  top: 100px;
+  width: 100%;
+  height: 25px;
+  font-size: 16px;
+  text-indent: 5%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.details__input4{
+  top: 100px;
+  width: 48%;
+  height: 25px;
+  font-size: 16px;
+  text-indent: 5%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.details__input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+
+.details__input-wrapper {
+  margin-bottom: 10px; /* add some spacing below the first input */
+}
+
+.details__input-wrapper--columns {
+  display: flex; /* use flexbox to create a two-column layout */
+  justify-content: space-between; /* add space between the columns */
+}
+
+.details__input-column {
+  flex-basis: 48%; /* set the width of each column */
+}
+
+
+.details__text2 {
+  position: absolute;
+  top: 150px;
+  width:35%;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+  "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  font-size : 18px;
+  margin-bottom: 25px;
+  color: #ffffff;
+}
+
+.details__text3 {
+  position: absolute;
+  top: 230px;
+  width:35%;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+  "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #ffffff;
+} 
+
+.country-input{
+  display: flex;
+  align-items: center;
+}
+
+select {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #444;
+  width: 100%;
+}
+
+select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+
+.details__text4 {
+  position: absolute;
+  top: 320px;
+  width:90%;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+  "Lucida Sans", Arial, sans-serif;
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.save-card-details {
+  position: absolute;
+  margin-bottom: 10px;
+  top : 550px;
+}
+
+.save-card {
+  display: none;
+}
+
+.save-card+ label:before {
+  content: ""; 
+  display: inline-block;
+  width: 20px; 
+  height: 23px;
+  border-radius: 50%;
+  border: 2px solid #999; 
+  margin-right: 5px; 
+}
+
+.save-card:checked + label:before {
+  background-color: #999; 
+}
+
+.desc {
+  color: white;
+}
+
+.payButton {
+  margin: 10px;
+}
+#paylink {
+  position: absolute;
+  top:600px;
+  left: 65%;
+  width: 25%;
+  text-align: center;
+  margin: 10px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  background-color: #504d4d;
+  color: white;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.details__text5 {
+  position: absolute;
+  top: 615px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+  "Lucida Sans", Arial, sans-serif;
+  font-size: 30px;
+  margin-bottom: 25px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.checkOutLogo{
+  position: absolute;
+  top: 150px;
+  left: 50%;
+
+}
+
+.checkOutLogo img {
+  width: 300px;
+  height: auto; /* to maintain aspect ratio */
+}
+
+
+
+
+/*****************/
+/*FOOTER*/
+/*****************/
+.footer {
+  height: 150px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__logo {
+  height: 100px;
+  margin-top: 25px;
+  margin-left: 100px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.list__link {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  color: white;
+  padding-bottom: 5px;
+}
+.title {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 25px;
+  margin-bottom: 10px;
+  
+}
+.copyright {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  margin-top: 100px;
+  margin-right:80px;
+}

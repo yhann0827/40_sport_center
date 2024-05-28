@@ -1,0 +1,414 @@
+{% extends 'managerbase.html' %}
+{% block title %}40 Sports Centre - Manage Staff{% endblock %}
+{% block style %}managestaff.css{% endblock %}
+{% block content %}
+<div class="manage-sports" id="filter-user" style="display:none">
+    <form id="filter-user-form">
+        <div class="details__text">
+        <p>First Name*</p>
+        <input
+            type="text"
+            id="f-first_name"
+            name="first_name"
+            placeholder="Enter Your First Name"
+            class="details__input"
+        />
+        </div>
+
+        <div class="details__text">
+        <p>Last Name*</p>
+        <input
+            type="text"
+            id="f-last_name"
+            name="signup__lastname"
+            placeholder="Enter Your Last Name"
+            class="details__input"
+        />
+        </div>
+
+        <div class="details__text">
+        <p>Email*</p>
+        <input
+            type="text"
+            id="f-email"
+            name="signup__email"
+            placeholder="Enter Your Email"
+            class="details__input"
+        />
+        </div>
+
+        <div class="details__text">
+        <p>Date of Birth*</p>
+        <input
+            type="date"
+            id="f-date_of_birth"
+            name="signup__dateofbirth"
+            placeholder="dd/mm/yyyy"
+            class="details__input"
+        />
+        </div>
+
+        <div class="radio">
+            <input type="radio" id="customer" name="f-user-type" value="Customer">
+            <label for="customer">Customer</label>
+            <input type="radio" id="employee" name="f-user-type" value="Employee">
+            <label for="employee">Employee</label>
+            <input type="radio" id="manager" name="f-user-type" value="Manager">
+            <label for="manager">Manager</label>    
+        </div>
+        <div class="buttons">
+            <input
+            type="submit"
+            name="set"
+            value="Set"
+            class="button"
+            />
+            <input
+            id="btn-filter-cancel"
+            type="button"
+            name="close"
+            value="Close"
+            class="button"
+            />        
+            <input
+            id="btn-filter-reset"
+            type="reset"
+            name="reset"
+            value="Reset"
+            class="button"
+            />        
+        </div>
+    </form>
+    <p class="message" id="filter-message"></p>
+</div>
+<div class="manage-sports" id="user-profile" style="display:none">
+    <div class="details__text">
+    <p>First Name*</p>
+    <input
+        type="text"
+        id="v-first_name"
+        name="first_name"
+        placeholder="Enter Your First Name"
+        class="details__input"
+        disabled
+    />
+    </div>
+
+    <div class="details__text">
+    <p>Last Name*</p>
+    <input
+        type="text"
+        id="v-last_name"
+        name="signup__lastname"
+        placeholder="Enter Your Last Name"
+        class="details__input"
+        disabled
+    />
+    </div>
+    <div class="details__text">
+    <p>Email*</p>
+    <input
+        type="email"
+        id="v-email"
+        name="signup__email"
+        placeholder="Enter Your Email"
+        class="details__input"
+        disabled
+    />
+    </div>
+
+    <div class="details__text">
+    <p>Date of Birth*</p>
+    <input
+        type="date"
+        id="v-date_of_birth"
+        name="signup__dateofbirth"
+        placeholder="dd/mm/yyyy"
+        class="details__input"
+        disabled
+    />
+    </div>
+    <input id="v-user_type" disabled />
+    <div class="buttons">
+        <input
+        id="btn-profile-close"
+        type="button"
+        name="close"
+        value="Close"
+        class="button"
+        />        
+    </div>
+</div>
+<div class="manage-sports" id="add-user" style="display:none">
+    <form id="create-user-form">
+        <div class="details__text">
+        <p>First Name*</p>
+        <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            placeholder="Enter Your First Name"
+            class="details__input"
+            required
+        />
+        </div>
+
+        <div class="details__text">
+        <p>Last Name*</p>
+        <input
+            type="text"
+            id="last_name"
+            name="signup__lastname"
+            placeholder="Enter Your Last Name"
+            class="details__input"
+            required
+        />
+        </div>
+        <div class="details__text">
+        <p>Email*</p>
+        <input
+            type="email"
+            id="email"
+            name="signup__email"
+            placeholder="Enter Your Email"
+            class="details__input"
+        />
+        </div>
+
+        <div class="details__text">
+        <p>Password*</p>
+        <input
+            type="password"
+            id="password"
+            name="signup__password"
+            placeholder="Enter Your Password"
+            class="details__input"
+            required
+        />
+        </div>
+        <div class="details__text">
+        <p>Date of Birth*</p>
+        <input
+            type="date"
+            id="date_of_birth"
+            name="signup__dateofbirth"
+            placeholder="dd/mm/yyyy"
+            class="details__input"
+            required
+        />
+        </div>
+        <div class="radio">
+            <input type="radio" id="customer" name="user-type" value="Customer">
+            <label for="customer">Customer</label>
+            <input type="radio" id="employee" name="user-type" value="Employee">
+            <label for="employee">Employee</label>
+            <input type="radio" id="manager" name="user-type" value="Manager">
+            <label for="manager">Manager</label>    
+        </div>
+        <div class="buttons">
+            <input
+            type="submit"
+            name="create"
+            value="Create"
+            class="button"
+            />
+            <input
+            id="btn-create-cancel"
+            type="button"
+            name="cancel"
+            value="Cancel"
+            class="button"
+            />        
+        </div>
+    </form>
+    <p id="messages"></p>
+</div>
+<div class="manage-sports" id="main">
+    <p class="title">Manage Staff and Customer</p>
+    <div class="buttons">
+        <button class="button" id="filter">Filter By <i class="fa fa-filter"></i> </button>
+        <button id="add-new" class="button"> Add New <i class="fa fa-plus"></i> </button>
+        <button class="button" id="search">Search</button>
+        <input type="text" id="search-text" placeholder="Enter search text..." />
+        <span id="search-message"></span>
+    </div>
+    <table class="table" id="users-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>User Type</th>  
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+</table>
+    <button class="previous"> &#8249; </button>
+    <button class="page-num"> 1 </button>
+    <button class="next"> &#8250; </button>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    var createUserData = function() {
+        return {
+            first_name: $('#first_name').val(),
+            last_name: $('#last_name').val(),
+            password: $('#password').val(),
+            email: $('#email').val(),
+            date_of_birth: new Date($('#date_of_birth').val()),
+            user_type: $("input[name='user-type']:checked").val()
+        }
+    };
+
+    $(document).ready(function(){
+        $('#btn-filter-reset').on('click', function(e){
+            var allUsers = JSON.parse(localStorage.getItem('users'));
+            $('#filter-message').text('');
+            populateUsers(allUsers);
+        });
+
+        var populateUsers = function(allUsers) {
+            $('#users-table tbody').text('');
+            $.each(allUsers, function(index, u){
+                var row = "<tr>" +
+                "<td>" + u.user_id + "</td>" +
+                "<td>" + u.first_name + "</td>" +
+                "<td>" + u.last_name + "</td>" +
+                "<td>" + u.user_type + "</td>" +
+                '<td><button id="view-'+u.user_id+'" class="view-profile">View Profile</button></td>'
+                "</tr>";
+                $('#users-table tbody').append(row);
+            });
+
+            $('.view-profile').on('click', function(e) {
+                console.log('clicked');
+                var user_id = parseInt(e.target.id.substr(5));
+                var stored_users = JSON.parse(localStorage.getItem('users'));
+                var user = stored_users.find(function(u){
+                    return user_id === u.user_id;
+                });
+
+                var date_of_birth = new Date(user.date_of_birth).toISOString().split('T')[0];
+                $('#v-first_name').val(user.first_name);
+                $('#v-last_name').val(user.last_name);
+                $('#v-email').val(user.email);
+                $('#v-date_of_birth').val(date_of_birth);
+                $('#v-user_type').val(user.user_type);
+                $('#add-user').hide();
+                $('#user-profile').show();
+                $('#filter-user').hide();
+                $('#main').hide();
+            });
+        };
+
+        $('#filter-user-form').on('submit', function(e){
+            var allUsers = JSON.parse(localStorage.getItem('users'));
+            var users = [];
+            var first_name = $('#f-first_name').val().toLowerCase().trim();
+            var last_name = $('#f-last_name').val().toLowerCase().trim();
+            var email = $('#f-email').val().toLowerCase().trim();
+            var date_of_birth = $('#f-date_of_birth').val();
+            var user_type = $("input[name='f-user-type']:checked").val();
+            users = allUsers.filter(function(u){
+                return (first_name.length > 0 && u.first_name.toLowerCase().indexOf(first_name) >= 0)
+                || (last_name.length > 0 && u.last_name.toLowerCase().indexOf(last_name) >= 0)
+                || (email.length > 0 && u.email.toLowerCase().indexOf(email) >= 0)
+                || (date_of_birth && new Date(date_of_birth).toDateString() === new Date(u.date_of_birth).toDateString())
+                || (user_type && user_type === u.user_type);
+            });
+            
+            $('#filter-message').text(users.length + " users found");
+            populateUsers(users);
+            e.preventDefault();
+        });
+
+        $('#add-new').on('click', function(){
+            $('#add-user').show();
+            $('#filter-user').hide();
+            $('#user-profile').hide();
+            $('#main').hide();
+        });
+
+        var mainOnly = function() {
+            $('#add-user').hide();
+            $('#filter-user').hide();
+            $('#user-profile').hide();
+            $('#main').show();
+        };
+
+        $('#btn-create-cancel').on('click', function(e){
+            e.preventDefault();
+            mainOnly();
+        });
+
+        $('#btn-filter-cancel').on('click', function(e){
+            e.preventDefault();
+            mainOnly();
+        });
+
+        $('#filter').on('click', function(){
+            $('#add-user').hide();
+            $('#user-profile').hide();
+            $('#filter-user').show();
+            $('#main').hide();
+        });
+
+        $('#btn-profile-close').on('click', function(){
+            mainOnly();
+        });
+
+        $('#search').on('click', function() {
+            var allUsers = JSON.parse(localStorage.getItem('users'));
+            var users = [];
+            var searchText = $('#search-text').val().toLowerCase().trim();
+            if(searchText !== "") {
+                users = allUsers.filter(function(u){
+                    return (searchText.length > 0 && (
+                        u.first_name.toLowerCase().indexOf(searchText) >= 0
+                    ||  u.last_name.toLowerCase().indexOf(searchText) >= 0
+                    || u.email.toLowerCase().indexOf(searchText) >= 0
+                    || u.user_type.toLowerCase().indexOf(searchText) >= 0));
+                });
+                
+                $('#search-message').text(users.length + " users found");
+            } else {
+                users = allUsers;
+                $('#search-message').text('');
+            }
+            populateUsers(users);
+        });
+
+        $('#create-user-form').on("submit", function(e){
+            console.log(createUserData());
+            e.preventDefault();
+            $.ajax({
+                url: '/users',
+                type: 'POST',
+                data: JSON.stringify(createUserData()),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (d) { 
+                    $('#messages').append(d.responseText);
+                },
+            });
+        });
+        $.ajax({
+                url: "/users/list",
+                cache: false,
+                type: 'GET'
+            }).done(function(data){
+                if(data.users) {
+                    var users = JSON.stringify(data.users);
+                    localStorage.setItem('users', users);
+                    populateUsers(data.users);
+                }
+            });
+        });
+</script>
+{% endblock %}

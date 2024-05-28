@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre - Sports Booking{% endblock %}
+{% block style %}customerSportsBooking.css{% endblock %}
+{% block content %}
+<div class="booking__outerdiv">
+  <div class="image__div">
+    <img
+      src="/static/image/basketball.PNG"
+      alt="Photo of basketball"
+      class="image"
+      height="250"
+    />
+    <img
+      src="/static/image/badminton.PNG"
+      alt="Photo of badminton"
+      class="image"
+      height="250"
+    />
+    <img
+      src="/static/image/gym.PNG"
+      alt="Photo of gym"
+      class="image"
+      height="250"
+    />
+  </div>
+
+  <div class="intro__div">
+    <p class="header">Book With Ease, Play With Peace!</p>
+    <p class="desc">
+      Perfect place to unwind from the stresses of the day.
+    </p>
+    <button class="book__button">BOOK NOW</button>
+  </div>
+
+  <div class="image__div">
+    <img
+      src="/static/image/tennis.PNG"
+      alt="Photo of Tennis"
+      class="image"
+      height="250"
+    />
+    <img
+      src="/static/image/squash.PNG"
+      alt="Photo of Squash"
+      class="image"
+      height="250"
+    />
+    <img
+      src="/static/image/swimming pool.PNG"
+      alt="Photo of Swimming Pool"
+      class="image"
+      height="250"
+    />
+  </div>
+</div>
+
+<div class="pricelist__div">
+  <p class="header">Price List</p>
+  <div class="pricing">
+    <p>Facilities and Pricing</p>
+    <p>(For Non-Members)</p>
+  </div>
+  <div class="horizontal__line"></div>
+  <table class="price__table">
+    <tr>
+      <td style="width: 60%">Tennis Court</td>
+      <td>£15 per hour</td>
+    </tr>
+    <tr>
+      <td>Basketball Court</td>
+      <td>£15 per hour</td>
+    </tr>
+    <tr>
+      <td>Squash Court</td>
+      <td>£20 per hour</td>
+    </tr>
+    <tr>
+      <td>Football Field</td>
+      <td>£15 per hour</td>
+    </tr>
+    <tr>
+      <td>Badminton Court</td>
+      <td>£15 per hour</td>
+    </tr>
+    <tr>
+      <td>Swimming Pool</td>
+      <td>£7 per individual entry</td>
+    </tr>
+    <tr>
+      <td>Gym</td>
+      <td>£5 per individual entry</td>
+    </tr>
+    <tr>
+      <td>Functional Studio</td>
+      <td>£6 per individual entry</td>
+    </tr>
+  </table>
+  <div class="pricing__members">
+    <p>Booking are free of charge for all members</p>
+    <p>(Included in memberships)</p>
+  </div>
+</div>
+{% if session['loggedin'] != None %}
+<div class="reservation__outerdiv">
+  <h1 class="header">Make Your Reservation</h1>
+  <div class="reservation__div">
+    <!-- <div class="question">
+      Are you a member?
+      <div class="option">
+        <input type="checkbox" /> Yes <input type="checkbox" /> No
+      </div>
+    </div> -->
+    <div class="question">
+      Facility Type
+      <div class="option">
+        <select
+          id="facility_list"
+          class="facility_list"
+          name="facility_list"
+        >
+          <option value="0" selected>
+            -- Select a Facility --
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="question">
+      Activity Type
+      <div class="option">
+        <select
+          id="activity_list"
+          class="activity_list"
+          name="activity_list"
+        >
+          <option value="0" selected>-- Select an Activity --</option>
+        </select>
+      </div>
+    </div>
+    <div id="activity-message" class="availability"></div>
+    <div class="question">
+      Date and Time
+      <div class="option">
+        <input id="booking-date" type="date" />
+        <label for="start-time">From: </label>
+        <input id="start-time" type="time" />
+        <label for="end-time">To: </label>
+        <input id="end-time" type="time" />
+      </div>
+    </div>
+    <button id="btn-check-availability">Check Availability</button>
+    <div id="message" class="availability">
+      
+    </div>
+
+    <button id="btnAdd" disabled>Add to Basket</button>
+    <button id="btnCheckout" disabled>Checkout</button>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+<script>
+    var cart = [];
+    class CartItem {
+      constructor(facility_id,activity_id, item, price, type, start_time, end_time) {
+        this.facility_id = facility_id;
+        this.activity_id = activity_id;
+        this.class_id = null;
+        this.item = item;
+        this.price = price;
+        this.type = type;
+        this.start_time = start_time;
+        this.end_time = end_time;
+      }
+    }
+
+    $('document').ready(function() {
+      var days = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      var stored_cart = localStorage.getItem('cart');
+      if(stored_cart)
+        cart = JSON.parse(stored_cart);
+      var facility_id = null;
+      console.log(cart);
+
+      var get_data = function(key, id) {
+        var items = JSON.parse(localStorage.getItem(key));
+        var item = items.find(function(i) {
+          return i.id == id;
+        });
+        return item;
+      };
+
+      $('#btnAdd').on('click', function(){
+        var data = availability_data();
+        var facility = get_data('s-facilities', data.facility_id);
+        var activity = get_data('activities', data.activity_id);
+        console.log(data);
+        var facility_name = data.facility_name + '-' + data.activity_name + '-' + $('#booking-date').val() + '-' + $('#start-time').val() + '-' + $('#end-time').val();
+        var order = new CartItem(data.facility_id, data.activity_id, facility_name, activity.price, "Facility", data.check_start_time, data.check_end_time);
+        cart.push(order);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        console.log(cart);
+        $('#btnCheckout').attr('disabled',false);
+      });
+
+      $.ajax({
+          url: "/sports-facilities",
+          cache: false
+      }).done(function(data){
+        if(data) {
+          localStorage.setItem("s-facilities", JSON.stringify(data.facilities));
+          localStorage.setItem("activities", JSON.stringify(data.activities));
+          localStorage.setItem("s-classes", JSON.stringify(data.classes));
+          $.each(data.facilities, function(index, f){
+            if(!f.is_classes) {
+              var option = '<option value="' + f.id + '">'+
+              f.facility_name +
+              "</option>";
+              $('#facility_list').append(option);
+            }
+          });
+        }
+      });
+
+      $('#facility_list').on('change', function(){
+        var facility_id = $('#facility_list option:selected').val();
+        var allActivities = JSON.parse(localStorage.getItem('activities'));
+        var allClasses = JSON.parse(localStorage.getItem('s-classes'));
+        var activities = allActivities.filter(function(a){
+          return a.facility_id == parseInt(facility_id);
+        });
+
+        $('#activity_list').html('<option value="0" selected>-- Select an Activity --</option>');
+        $.each(activities, function(index, a){
+          var option = '<option value="' + a.id + '">'+
+            a.activity_name +
+          "</option>";
+          $('#activity_list').append(option);
+        });
+
+        $('#activity_list').on('change', function(){
+          var activity_id = $('#activity_list option:selected').val();
+          var activity = get_data('activities', activity_id);
+          if(activity) {
+            var activityMessage = 'Activity is for ' + activity.duration.toString() + ' hour(s) and ' + activity.unit + ' person(s)';
+            activityMessage = activityMessage + '<br> On';
+            if(activity.is_team) {
+              var classes = allClasses.filter(function(c){
+                return c.sports_activity_id == activity.id;
+              });
+              $.each(classes, function(index, c){
+                activityMessage = activityMessage +' '+days[c.day_of_week]+' from '+c.start_time+' to '+c.end_time
+              });
+            } else {
+              var facility = get_data('s-facilities', activity.facility_id);
+              activityMessage = activityMessage  + ' daily basis from '+facility.start_time+' to '+facility.end_time;
+            }
+            $('#activity-message').html(activityMessage);
+          }
+        });
+      });
+
+      $('#btnCheckout').on('click', function(){
+        window.location.href = '/cart';
+      });
+
+      $('#btn-check-availability').on('click', function(){
+        var data = availability_data();
+        var activity = get_data('activities',data.activity_id);
+        if(activity.is_team) {
+          var allClasses = JSON.parse(localStorage.getItem('s-classes'));
+          var start_time = $('#start-time').val();
+          var end_time = $('#end-time').val();
+          var classes = allClasses.find(function(c){
+            return c.sports_activity_id == activity.id && activity.day_of_week == data.check_start_time.getDay() && c.start_time === start_time && c.end_time === end_time;
+          });
+          console.log(classes);
+          if(!classes) {
+            $('#message').text('Invalid date/time selection');
+            return;
+          }
+        } else {
+          var facility = get_data('s-facilities', data.facility_id);
+          s = new Date($('#booking-date').val() + "T" + facility.start_time);
+          e = new Date($('#booking-date').val() + "T" + facility.end_time);
+          if(data.check_start_time < s || data.check_end_time > e) {
+            $('#message').text('Invalid date/time selection');
+            return;
+          }
+
+          var dateDiff = (data.check_end_time - data.check_start_time) / 1000;
+          var duration = dateDiff/(3600);
+          if(duration != activity.duration) {
+            $('#message').text('Time duration is invalid');
+            return;
+          }
+          $('#message').text('');
+          $.ajax({
+            url: '/sports-bookings/check',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function () {
+              $('#message').html('The facility is available on the selected time slot.');
+              $('#btnAdd').attr('disabled',false);
+            },
+            error: function () {
+              $('#message').html('The facility is not available on the selected time slot.');
+              $('#btnAdd').attr('disabled',true);
+            }
+          });
+        }
+      });
+    });
+
+    var availability_data = function() {
+      s = new Date($('#booking-date').val() + "T" + $('#start-time').val());
+      e = new Date($('#booking-date').val() + "T" + $('#end-time').val());
+      return {
+        facility_id: $('#facility_list option:selected').val(),
+        facility_name: $('#facility_list option:selected').text(),
+        activity_id: $('#activity_list option:selected').val(),
+        activity_name: $('#activity_list option:selected').text(),
+        check_start_time: s,
+        check_end_time: e
+      };
+    };
+</script>
+{% endblock %}

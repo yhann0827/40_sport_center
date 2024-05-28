@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre - My Bookings{% endblock %}
+{% block style %}shoppingcart.css{% endblock %}
+{% block content %}
+<div class="cart-item">
+  <table id="items" class="table item-table">
+      <thead>
+          <tr>
+              <th>#</th>
+              <th>Facility</th>
+              <th>Activity</th>
+              <th>Class</th>
+              <th>Date</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Price</th>
+              <th></th>
+          </tr>
+          <tbody></tbody>
+          <tfoot></tfoot>
+      </thead>
+  </table>
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+  $('document').ready(function() {
+  $.ajax({
+          url: "/bookings",
+          cache: false
+      }).done(function(data){
+          console.log(data.bookings);
+          if(data.bookings) {
+              $.each(data.bookings, function(index, booking){
+                var booking_class = "-";                
+                if(booking.class_name) {
+                  booking_class = booking.class_name
+                }
+                var booking_date = new Date(booking.start_time).toLocaleDateString()
+                var start_time = new Date(booking.start_time).toLocaleTimeString();
+                var end_time = new Date(booking.end_time).toLocaleTimeString();
+                var row = "<tr>"+
+                  "<td>"+booking.booking_id+"</td>"+
+                  "<td>"+booking.facility+"</td>"+
+                  "<td>"+booking.activity+"</td>"+                  
+                  "<td>"+booking_class+"</td>"+
+                  "<td>"+booking_date+"</td>"+
+                  "<td>"+start_time+"</td>"+
+                  "<td>"+end_time+"</td>"+
+                  "<td>"+booking.amount+"</td>"+
+                  "</tr>";
+                $('#items tbody').append(row);
+              });
+          }
+      });
+  });
+</script>
+{% endblock %}

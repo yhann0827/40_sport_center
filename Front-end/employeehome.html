@@ -1,0 +1,78 @@
+{% extends 'employeebase.html' %}
+{% block title %}40 Sports Centre - Employee Home{% endblock %}
+{% block style %}employeehome.css{% endblock %}
+{% block content %}
+    <!--Getting Started Page-->
+    <div class="startpage__outerdiv">
+      <div class="startpage__div">
+        <p id="welcome_word">40 SPORTS CENTRE</p>
+        <p id="centre_word">Management System</p>
+        <div class="startButton">
+          <a href="/login" id="startlink">Get Started</a>
+        </div>
+      </div>
+
+      <!-- <div class="scrollbox" id="scrollbox"></div> -->
+      <img
+        src="/static/image/gym_wallpaper.jpg"
+        alt="Photo of a Gym"
+        id="gymwallpaperimg"
+      />
+    </div>
+
+    <div class="managesportsbooking__outerdiv">
+      <div class="managesportsbooking__div">
+        <div class="managesportsbooking__intro">
+          <p id="sportsbooking__word">Manage Sports Booking</p>
+          <p id="sportsbooking__desc">
+            Create booking for customers.
+          </p>
+          <div class="manageButton">
+            <a href="/employee/sports" id="managesportslink">Manage</a>
+          </div>
+        </div>
+        <div class="sportsbooking_img">
+          <img
+            src="/static/image/sportsbooking.png"
+            alt="Photo of different types of sports"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="manageclassbooking__outerdiv">
+      <div class="manageclassbooking__div">
+        <div class="manageclassbooking_img">
+          <img src="/static/image/classbooking.png" alt="Photo of a calendar" />
+        </div>
+        <div class="manageclassbooking__intro">
+          <p id="classbooking__word">Manage Class Booking</p>
+          <p id="classbooking__desc">
+            Create class booking for customers.
+          </p>
+          <div class="manageButton">
+            <a href="/employee/class" id="manageclasslink">Manage</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="managemembership__outerdiv">
+      <div class="managemembership__div">
+        <div class="managemembership__intro">
+          <p id="membership__word">Manage Customer</p>
+          <p id="membership__desc">
+            Amend details of customers.
+          </p>
+          <div class="joinButton">
+            <a href="/employee/customer" id="managememberandstaff">Manage</a>
+          </div>
+        </div>
+        <div class="membership_img">
+          <img src="/static/image/membership.png" alt="Photo of membership" />
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block script %}
+{% endblock %}

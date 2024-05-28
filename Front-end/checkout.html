@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre - Checkout{% endblock %}
+{% block style %}checkout.css{% endblock %}
+{% block content %}
+    <!--Checkout Page-->
+    <div class="checkoutpage__outerdiv">
+      <div class="checkoutInfoPage__div">
+        <p id="checkoutinfo__word">Checkout</p>
+        <p id="enterdetail_word">Enter your payment details: </p>
+        <div class="Information__div">
+            <form id="frmPay">
+                <div class="details__text">
+            <p class="input-title">Card Information</p>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                id="card_number"
+                name="card_number"
+                placeholder="Insert your card number "
+                class="details__input1"
+                required
+              />
+            </div>
+            <div class="details__input-wrapper details__input-wrapper--columns">
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="card_expiry"
+                  name="card_expiry"
+                  placeholder="MM/YY"
+                  class="details__input"
+                  required
+                />
+              </div>
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="cvc"
+                  name="CVC"
+                  placeholder="CVC"
+                  class="details__input"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+        <div class="details__text2">
+          <p class="input-title">Name On Card</p>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder=""
+              class="details__input"
+            />
+        </div>
+        
+        <div class="details__text3">
+          <p class="input-title">Country</p>
+              <div class="country-input">
+                <select id="country" name="country" required>
+                  <option value="">--Select Country--</option>
+                  <option value="usa">USA</option>
+                  <option value="canada">Canada</option>
+                  <option value="uk">UK</option>
+                <!-- Add more countries here -->
+                </select>
+            </div>
+        </div>
+
+        <div class="details__text4">
+          <p class="input-title">Billing Address</p>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                id="billing_address"
+                name="StreetAddress"
+                placeholder="Street Address "
+                class="details__input1"
+                required
+              />
+            </div>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                name="StreetAddress2"
+                placeholder="Street Address Line 2 "
+                class="details__input1"
+              />
+            </div>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                name="StreetAddress3"
+                placeholder="Street Address Line 3"
+                class="details__input1"
+              />
+            </div>
+            <div class="details__input-wrapper details__input-wrapper--columns">
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  placeholder="City"
+                  class="details__input"
+                />
+              </div>
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="state"
+                  name="State/Province"
+                  placeholder="State/Province"
+                  class="details__input"
+                  required
+                />
+              </div>
+            </div>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                id="postal"
+                name="zipcode"
+                placeholder="Postal/Zipcode"
+                class="details__input4"
+                required
+              />
+            </div>
+        </div>
+
+        <div class="save-card-details">
+          <input type="checkbox" id="save-card" name="save-card" />
+          <label for="save-card" class="desc">Save Card Details</label>
+        </div>
+
+        <div class="payButton">
+            <input type="submit" id="paylink" value="PAY"> 
+        </div>
+            </form>
+      </div>
+
+      <div class="checkOutLogo">
+        <img
+        src="/static/image/checkout logo.png"
+        alt="Sports Centre logo"
+        id="SportsCentreLogo"
+      />
+      </div>
+
+           
+        </div>    
+      </div>  
+    </div>
+{% endblock %}
+{% block script %}
+<script>
+  var get_date = function(d) {
+    return new Date('20' + d.substring(3) + '-' + d.substring(0,2) + '-01');
+  };
+
+  class CardData {
+    constructor() {
+      this.cart = JSON.parse(localStorage.getItem('cart'));
+      var discount = JSON.parse(localStorage.getItem('discount'));
+      var discount_id = null;
+      if(discount != null && discount.discount != null) {
+        discount_id = discount.discount.discount_id;
+      }
+      this.discount_id = discount_id;
+      this.card_number = $('#card_number').val();
+      this.cvc = $('#cvc').val();
+      this.expiry_date = get_date($('#card_expiry').val());
+      this.billing_address = $('#billing_address').val();
+      this.country = $('#country option:selected').text();
+      this.city = $('#city').val();
+      this.state = $('#state').val();
+      this.postal = $('#postal').val();
+      this.save = $('#save-card:checked').val();
+    }
+  }
+
+  $(document).ready(function(){
+    console.log(new CardData());
+  
+    $('#frmPay').on('submit', function(e){
+      e.preventDefault();
+      data = JSON.stringify(new CardData());
+      $.ajax({
+          url: '/payments',
+          type: 'POST',
+          data: data,
+          dataType: 'json',
+          contentType: "application/json",
+          success: function () {
+            localStorage.removeItem('cart');
+            localStorage.clear();
+            window.location.href = "/";
+          },
+          error: function (d) { 
+          }
+      });
+    });
+  });
+</script>
+{% endblock %}

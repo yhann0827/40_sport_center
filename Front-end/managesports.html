@@ -1,0 +1,434 @@
+{% extends 'managerbase.html' %}
+{% block title %}40 Sports Centre - Manage Sports{% endblock %}
+{% block style %}managesports.css{% endblock %}
+{% block content %}
+<div id="discount-add" class="form" style="display:none">
+    <h2 class="form-title">Add new discount</h2>
+    <form id="add-discount-form">
+        <label for="applied_to">Applied to:</label>
+        <select id="applied_to" value="-Select-">
+            <option value="Members">Members</option>
+            <option value="Non Members">Non Members</option>
+        </select>
+        <label for="minimum_booking">Minimum booking:</label>
+        <input type="number" id="minimum_booking" />
+        <label for="amount">Rate %:</label>
+        <input type="amount" id="amount" />
+        <button id="btn-submit" type="submit">Save</input>
+        <button class="cancel">Cancel</input>
+    </form>
+</div>
+<div id="discount-edit" class="form" style="display:none">
+    <h2 class="form-title">Edit discount</h2>
+    <form id="edit-discount-form">
+        <input type="hidden" id="discount_id" />
+        <label for="e-applied_to">Applied to:</label>
+        <select id="e-applied_to" value="-Select-">
+            <option value="Members">Members</option>
+            <option value="Non Members">Non Members</option>
+        </select>
+        <label for="e-minimum_booking">Minimum booking:</label>
+        <input type="number" id="e-minimum_booking" />
+        <label for="e-amount">Rate %:</label>
+        <input type="amount" id="e-amount" />
+        <button id="btn-submit" type="submit">Save</input>
+        <button class="cancel">Cancel</input>
+    </form>
+</div>
+<div id="sports-add" class="form" style="display:none">
+    <h2 class="form-title">Add new sports</h2>
+    <form id="add-sports-form">
+        <label for="facility_name">Name:</label>
+        <input type="text" id="facility_name" placeholder="Name..." />
+        <label for="start_d">Date:</label>
+        <input type="date" id="start_d" />
+        <label for="start_t">Start time:</label>
+        <input type="time" id="start_t" />
+        <label for="end_t">End time:</label>
+        <input type="time" id="end_t" />
+        <label for="description">Description:</label>
+        <input type="text" id="description" placeholder="Description..." />
+        <label for="price">Price &#47; &#163;:</label>
+        <input type="number" step="0.1" id="price" placeholder="Description..." />
+        <button id="btn-submit" type="submit">Save</input>
+        <button class="cancel">Cancel</input>
+    </form>
+</div>
+<div id="sports-edit" class="form" style="display:none">
+    <h2 class="form-title">Edit sports</h2>
+    <form id="edit-sports-form">
+        <input type="hidden" id="e-facility_id" />
+        <label for="facility_name">Name:</label>
+        <input type="text" id="e-facility_name" placeholder="Name..." />
+        <label for="start_d">Date:</label>
+        <input type="date" id="e-start_d" />
+        <label for="start_t">Start time:</label>
+        <input type="time" id="e-start_t" />
+        <label for="end_t">End time:</label>
+        <input type="time" id="e-end_t" />
+        <label for="description">Description:</label>
+        <input type="text" id="e-description" placeholder="Description..." />
+        <label for="price">Price &#47; &#163;:</label>
+        <input type="number" step="0.1" id="e-price" placeholder="Description..." />
+        <button id="btn-submit" type="submit">Save</input>
+        <button class="cancel">Cancel</input>
+    </form>
+</div>
+<div id="sports-list" class="manage-sports">
+    <p class="title">Manage Sports Facilities</p>
+    <table id="tblFacilities" class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Facility</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Has Classes</th>
+                <th><span title="Add new" class="edit-table" id="add"> + </span></th>
+            </tr>    
+        </thead>
+        <tbody></tbody>  
+    </table>
+    <p class="title">Manage Sports Actvities</p>
+    <table id="tblActivities" class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Activity</th>
+                <th>Facility</th>
+                <th>Is Team Event</th>
+                <th>Duration</th>
+                <th>Person(s) per booking</th>
+                <th>Price</th>
+                <th><span title="Add new" class="edit-table" id="add"> + </span></th>
+            </tr>    
+        </thead>
+        <tbody></tbody>  
+    </table>
+    <p class="title">Manage Sports Classes</p>
+    <table id="tblClasses" class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Class</th>
+                <th>Activity</th>
+                <th>Day of Week</th>
+                <th>Start</th>
+                <th>End</th>
+                <th><span title="Add new" class="edit-table" id="add"> + </span></th>
+            </tr>    
+        </thead>
+        <tbody></tbody>  
+    </table>
+</div>
+<div class="manage-sports" id="discounts-list">
+    <p class="title">Manage Booking Discount</p>
+    <table class="table" id="tblDiscounts">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>User Type</th>
+                <th>Minimum Booking for Discount</th>
+                <th>Discount rate &#47;&#37;</th>
+                <th><span title="Add new" class="edit-table" id="dis-discount"> + </span></th>    
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+    var days = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    $(document).ready(function(){
+        $('.cancel').on('click', function(e){
+            e.preventDefault();
+            $('#sports-list').show();
+            $('#discounts-list').show();
+            $('#sports-edit').hide();
+            $('#sports-add').hide();
+            $('#discount-add').hide();
+        });
+
+        var addDiscountData = function() {
+            return {
+                applied_to: $('#applied_to :selected').val(),
+                amount: $('#amount').val(),
+                minimum_booking: $('#minimum_booking').val()
+            };
+        };
+
+        var editDiscountData = function() {
+            return {
+                discount_id: $('#discount_id').val(),
+                applied_to: $('#e-applied_to :selected').val(),
+                amount: $('#e-amount').val(),
+                minimum_booking: $('#e-minimum_booking').val()
+            };
+        };
+
+        var addFormData = function() {
+            return {
+                facility_name: $('#facility_name').val(),
+                start_time: new Date($('#start_d').val() + 'T' + $('#start_t').val() + ':00.00Z').toISOString(),
+                end_time: new Date($('#start_d').val() + 'T' + $('#end_t').val() + ':00.00Z').toISOString(),
+                description: $('#description').val(),
+                price: $('#price').val()
+            };
+        };
+
+        var editFormData = function() {
+            return {
+                facility_id: $('#e-facility_id').val(),
+                facility_name: $('#e-facility_name').val(),
+                start_time: new Date($('#e-start_d').val() + 'T' + $('#e-start_t').val() + ':00.00Z').toISOString(),
+                end_time: new Date($('#e-start_d').val() + 'T' + $('#e-end_t').val() + ':00.00Z').toISOString(),
+                description: $('#e-description').val(),
+                price: $('#e-price').val()
+            };
+        };
+
+        $('#add-discount-form').on("submit", function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/discounts',
+                type: 'POST',
+                data: JSON.stringify(addDiscountData()),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (d) { 
+                    $('#messages').append(d.responseText);
+                },
+            });
+        });
+
+        $('#edit-discount-form').on("submit", function(e){
+            e.preventDefault();
+            console.log(editDiscountData());
+            $.ajax({
+                url: '/discounts',
+                type: 'PUT',
+                data: JSON.stringify(editDiscountData()),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (d) { 
+                    $('#messages').append(d.responseText);
+                },
+            });
+        });
+
+        $('#add-sports-form').on("submit", function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/facilities',
+                type: 'POST',
+                data: JSON.stringify(addFormData()),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (d) { 
+                    $('#messages').append(d.responseText);
+                },
+            });
+        });
+        $('#edit-sports-form').on("submit", function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/facilities',
+                type: 'PUT',
+                data: JSON.stringify(editFormData()),
+                dataType: 'json',
+                contentType: "application/json",
+                success: function () {
+                    window.location.reload();
+                },
+                error: function (d) { 
+                    $('#messages').append(d.responseText);
+                },
+            });
+        });
+        $.ajax({
+                url: "/facilities/list",
+                cache: false,
+                type: 'GET'
+            }).done(function(data){
+                if(data.discounts) {
+                    var discounts = JSON.stringify(data.discounts);
+                    localStorage.setItem('discounts', discounts);
+                    $.each(data.discounts, function(index, d){
+                        console.log(d);
+                        var row = "<tr>" +
+                            "<td>" + d.discount_id + "</td>" +
+                            "<td>" + d.applied_to + "</td>" +
+                            "<td>" + d.minimum_booking + "</td>" +
+                            "<td>" + d.amount + "</td>" +
+                            '<td><span title="Edit" class="edit-table" id="edd-b-' + d.discount_id + 
+                                '">&#9998;</span>&nbsp;<span title="Delete" class="edit-table in-edit-table" id="ded-b-' + d.discount_id + '"> - </span></td>' +
+                        "</tr>";
+                        $('#tblDiscounts > tbody:last-child').append(row);
+                    });
+                }
+
+                if(data.facilities) {
+                    localStorage.setItem('facilities', JSON.stringify(data.facilities));
+                    localStorage.setItem('activities', JSON.stringify(data.activities));
+                    localStorage.setItem('classes', JSON.stringify(data.classes));
+
+                    $.each(data.facilities, function(index, facility){
+                        is_classes = "No";
+                        if(facility.is_classes) {
+                            is_classes = "Yes";
+                        }
+                        var row = "<tr>" +
+                            "<td>" + facility.id + "</td>" +
+                            "<td>" + facility.facility_name + "</td>" +
+                            "<td>" + facility.start_time + "</td>" +
+                            "<td>" + facility.end_time + "</td>" +
+                            "<td>" + is_classes + "</td>" +
+                            '<td><span title="Edit" class="edit-table in-edit-table" id="edi-b-' + facility.id + 
+                                '">&#9998;</span>&nbsp;<span title="Delete" class="edit-table in-edit-table" id="del-b-' + facility.id + '"> - </span></td>' +
+                        "</tr>";
+                        $('#tblFacilities > tbody:last-child').append(row);
+                    });
+                    $.each(data.activities, function(index, a){
+                        var facility = data.facilities.find(function(f){
+                            return a.facility_id == f.id;
+                        });
+                        is_team = "No";
+                        if(a.is_team) {
+                            is_team = "Yes";
+                        }
+                        var row = "<tr>" +
+                            "<td>" + a.id + "</td>" +
+                            "<td>" + a.activity_name + "</td>" +
+                            "<td>" + facility.facility_name + "</td>" +
+                            "<td>" + is_team + "</td>" +
+                            "<td>" + a.duration + "</td>" +
+                            "<td>" + a.unit + "</td>" +
+                            "<td>" + a.price + "</td>" +
+                            '<td><span title="Edit" class="edit-table in-edit-table" id="edi-b-' + a.id + 
+                                '">&#9998;</span>&nbsp;<span title="Delete" class="edit-table in-edit-table" id="del-b-' + a.id + '"> - </span></td>' +
+                        "</tr>";
+                        $('#tblActivities > tbody:last-child').append(row);
+                    });
+                    $.each(data.classes, function(index, c){
+                        var activity = data.activities.find(function(a){
+                            return c.sports_activity_id == a.id;
+
+                        });
+
+                        var facility = data.facilities.find(function(f){
+                            return activity.facility_id == f.id;
+                        });
+                        var row = "<tr>" +
+                            "<td>" + c.id + "</td>" +
+                            "<td>" + c.class_name + "</td>" +
+                            "<td>" + facility.facility_name + ' / ' + activity.activity_name + "</td>" +
+                            "<td>" + days[c.day_of_week] + "</td>" +
+                            "<td>" + c.start_time + "</td>" +
+                            "<td>" + c.end_time + "</td>" +
+                            '<td><span title="Edit" class="edit-table in-edit-table" id="edi-b-' + c.id + 
+                                '">&#9998;</span>&nbsp;<span title="Delete" class="edit-table in-edit-table" id="del-b-' + c.id + '"> - </span></td>' +
+                        "</tr>";
+                        $('#tblClasses > tbody:last-child').append(row);
+                    });
+                    $('.edit-table').on('click', function(e){
+                        var action = this.id.substring(0,3);
+                        var id = this.id.substring(6);
+
+                        switch(action) {
+                            case 'add':
+                                $('#discounts-list').hide();
+                                $('#sports-list').hide();
+                                $('#sports-add').show();
+                                break;
+                            case 'edi':
+                                $('discounts-lis').hide();
+                                $('#sports-list').hide();
+                                $('#sports-edit').show();
+                                facilities = JSON.parse(localStorage.getItem('facilities'));
+                                var facility = facilities.find(function(f){
+                                    return f.facility_id === parseInt(id);
+                                });
+                                console.log("facility", facility);
+                                $('#e-facility_id').val(facility.facility_id);
+                                $('#e-facility_name').val(facility.facility_name);
+                                $('#e-start_d').val(new Date(facility.start_time).toISOString().substring(0,10));
+                                $('#e-start_t').val(new Date(facility.start_time).toISOString().substring(11,16));
+                                $('#e-end_t').val(new Date(facility.end_time).toISOString().substring(11,16));
+                                $('#e-description').val(facility.description);
+                                $('#e-price').val(facility.price);
+                                break;
+                            case 'del':
+                                if(confirm('Are you sure you want to delete this?') == true) {
+                                    $.ajax({
+                                        url: '/facilities/' + id,
+                                        type: 'DELETE',
+                                        success: function () {
+                                            window.location.reload();
+                                        },
+                                        error: function (d) { 
+                                            $('#messages').append(d.responseText);
+                                        },
+                                    });
+                                }
+                                break;
+                            case 'dis':
+                                $('#sports-list').hide();
+                                $('#discounts-list').hide();
+                                $('#sports-edit').hide();
+                                $('#sports-add').hide();
+                                $('#discount-add').show();
+                                break;
+                            case 'edd':
+                            $('#sports-list').hide();
+                                discounts = JSON.parse(localStorage.getItem('discounts'));
+                                var discount = discounts.find(function(f){
+                                    return f.discount_id === parseInt(id);
+                                });
+                                $('#discounts-list').hide();
+                                $('#sports-edit').hide();
+                                $('#sports-add').hide();
+                                $('#discount-add').hide();
+                                $('#discount-edit').show();
+                                $('#discount_id').val(id);
+                                $('#e-applied_to :selected').val(discount.applied_to);
+                                $('#e-amount').val(discount.amount);
+                                $('#e-minimum_booking').val(discount.minimum_booking);
+                                break;
+                            case 'ded':
+                                if(confirm('Are you sure you want to delete this?') == true) {
+                                    $.ajax({
+                                        url: '/discounts/' + id,
+                                        type: 'DELETE',
+                                        success: function () {
+                                            window.location.reload();
+                                        },
+                                        error: function (d) { 
+                                            $('#messages').append(d.responseText);
+                                        },
+                                    });
+                                }
+                                break;
+                            default:
+                                $('#sports-list').show();
+                                $('#sports-edit').hide();
+                                $('#sports-add').hide();
+                                $('#discount-add').hide();
+                                break;
+                        }
+                    });
+                }
+            });
+        });
+</script>
+{% endblock %}

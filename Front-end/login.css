@@ -1,0 +1,246 @@
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+/*****************/
+/*NAVIGATION BAR*/
+/*****************/
+.navigation_div {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#logo {
+  width: 8%;
+  height: 8%;
+  padding-left: 40px;
+}
+.navigation_div .navigation_link a {
+  color: white;
+  padding: 20px;
+  text-decoration: none;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 17px;
+}
+
+.navigation_div .navigation_link {
+  margin: 5px 30px 5px 30px;
+  display: flex;
+}
+
+/*****************/
+/*OUTERDIV*/
+/*****************/
+.outerdiv {
+  padding-bottom: 70px;
+  padding-top: 50px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*****************/
+/*LOGIN/SIGN UP OUTERDIV*/
+/*****************/
+.loginSignup__outerdiv {
+  /* height: 75vh; */
+  width: 80vw;
+  background-color: white;
+  display: flex;
+}
+
+/*****************/
+/*LOGIN DIV*/
+/*****************/
+.login__div {
+  background-color: #d9d9d9;
+  width: 50%;
+  color: black;
+
+  align-items: center;
+}
+
+.login__word {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.details {
+  margin: 20px;
+  padding-left: 30px;
+}
+.details__text {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 20px;
+  margin-bottom: 25px;
+}
+
+.details__input {
+  width: 90%;
+  height: 25px;
+}
+/*****************/
+/*SIGN UP DIV*/
+/*****************/
+.signup__div {
+  width: 50%;
+  color: black;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.signup__word {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+/*****************/
+/*Remember Me and Forgot Your Password*/
+/*****************/
+.passworddetails__outerdiv {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: lighter;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  width: 90%;
+  margin-bottom: 20px;
+}
+
+.rememberme__div {
+  display: flex;
+}
+.rememberme__checkbox {
+  width: 30px;
+  height: 20px;
+  color: white;
+}
+
+.forgotpassword__div {
+  display: flex;
+  align-items: flex-end;
+}
+
+/*****************/
+/*Login and Create Button*/
+/*****************/
+.button {
+  background-color: #848383;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  width: 80px;
+  padding: 10px;
+  font-size: 15px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+/*****************/
+/*Other Options*/
+/*****************/
+.otheroptions__outerdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.otheroption__div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.signinusing__div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+}
+.options__imgdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.options__img {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+}
+
+#google {
+  width: 45px;
+  height: 45px;
+}
+#twitter {
+  width: 35px;
+  height: 35px;
+}
+
+#facebook {
+  padding-bottom: 10px;
+}
+
+.otherroles__div {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.otherroles__link {
+  padding-bottom: 7px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 15px;
+}
+
+/*****************/
+/*FOOTER*/
+/*****************/
+.footer {
+  height: 150px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__logo {
+  height: 100px;
+  margin-top: 25px;
+  margin-left: 100px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.list__link {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  color: white;
+  padding-bottom: 5px;
+}
+.title {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 25px;
+}
+.copyright {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  margin-top: 100px;
+  margin-right: 80px;
+}

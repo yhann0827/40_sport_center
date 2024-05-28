@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre - My Account{% endblock %}
+{% block style %}CustomerMyAcc.css{% endblock %}
+{% block content %}
+    <!--Profile Page-->
+    <div class="profilepage__outerdiv">
+      <div class="basicInfoPage__div">
+          <p id="basicinfo__word">Basic Information</p>
+          <div class="Information__div">
+              <div class="details__text">
+                  <p class="input-title">First Name</p>
+                      <input
+                      type="text"
+                      id="first_name"
+                      name="firstname"
+                      placeholder=""
+                      class="details__input"
+                      />
+              </div>
+              <div class="details__text2">
+                  <p class="input-title">Last Name</p>
+                      <input
+                      type="text"
+                      id="last_name"
+                      name="lastname"
+                      placeholder=""
+                      class="details__input"
+                      />
+              </div>
+              <div class="details__text3">
+                  <p class="input-title">Date of Birth</p>
+                      <input
+                      type="text"
+                      id="date_of_birth"
+                      name="dateofbirth"
+                      placeholder=""
+                      class="details__input"
+                      />
+              </div>
+              <div class="details__text4">
+                  <p class="input-title">Email</p>
+                      <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      placeholder=""
+                      class="details__input"
+                      />
+              </div>
+              <p id="edit_info">To edit account information, email at sc22jyt@leeds.ac.uk </p>
+          </div>
+      
+      </div>  
+
+      </div>
+
+      <div class = "membershippage__div">
+          <p id="membershipinfo__word">Membership Information</p>
+          <div class="Information__div2">
+              <div class="details__text8">
+                  <p class="input-title">Membership ID</p>
+                      <input
+                      type="text"
+                      id="membership-id"
+                      name="membership id"
+                      placeholder=""
+                      class="details__input"
+                      />
+              </div>
+              <div class="details__text9">
+                  <p class="input-title">Expiry date</p>
+                      <input
+                      type="text"
+                      id="expiry-date"
+                      name="expiry date"
+                      placeholder=""
+                      class="details__input"
+                      />
+                      <button id="cancel">Cancel Membership</button>
+              </div>
+          </div>
+      </div>   
+  </div>
+{% endblock %}
+{% block script %}
+<script>
+  $(document).ready(function(){
+      $.ajax({
+              url: "/users/my",
+              cache: false
+          }).done(function(data){
+              if(data.user) {
+                  $('#first_name').val(data.user.first_name);
+                  $('#last_name').val(data.user.last_name);
+                  $('#email').val(data.user.email);
+                  $('#date_of_birth').val(new Date(data.user.date_of_birth).toLocaleDateString());
+              }
+
+              if(data.membership){
+                $('#membership-id').val(data.membership.membership_id);
+                $('#expiry-date').val(new Date(data.membership.date_of_expiry).toLocaleDateString());
+              }
+          });
+        $('#cancel').on('click',function(){
+          alert("Your membership will be cancelled after the expiry date");
+        });
+  });
+</script>
+{% endblock %}
