@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Sports Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="static/styles/sportsbooking.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- <script src="main.js"></script> -->
+  </head>
+  <body>
+    <div class="navigation_div">
+      <img src="static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+      <div class="navigation_link">
+        <a href="/">HOME</a>
+        <a href="/sportsbooking">SPORTS</a>
+        <a href="/classbooking">CLASS</a>
+        {% if session['loggedin'] != None %}
+        <a href="/booking">MY BOOKING</a>
+        <a href="/account">MY ACCOUNT</a>
+        <a href="/logout">LOG OUT</a>
+        {% else %}
+        <a href="/login">LOG IN</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="booking__outerdiv">
+      <table id="tablBookings">
+        <thead>
+          <th>#</th>
+          <th>Facility</th>
+          <th>Start</th>
+          <th>End</th>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div class="footer">
+      <img src="static/image/logo.PNG" alt="Logo" class="footer__logo" />
+      <div class="list">
+        <div class="title">Services</div>
+        <a href="static/sportsbooking" class="list__link">Sports Booking</a>
+        <a href="static/classbooking" class="list__link">Class Booking</a>
+        <a href="static/membership" class="list__link">Membership</a>
+      </div>
+
+      <div class="list">
+        <div class="title">Contact Us</div>
+        <a href="" class="list__link">Facebook</a>
+        <a href="" class="list__link">Instagram</a>
+        <a href="" class="list__link">Twitter</a>
+      </div>
+
+      <div class="copyright">Copyright @40SportsCentre2023</div>
+    </div>
+    <script>
+           $('document').ready(function() {
+            $.ajax({
+                    url: "/bookings",
+                    cache: false
+                }).done(function(data){
+                    console.log(data.bookings);
+                    if(data.bookings) {
+                        $.each(data.bookings, function(index, booking){
+                            var row = "<tr>" +
+                                "<td>" + booking.booking_id + "</td>" +
+                                "<td>" + booking.facility + "</td>" +
+                                "<td>" + new Date(booking.start_time).toLocaleString() + "</td>" +
+                                "<td>" + new Date(booking.end_time).toLocaleString() + "</td>" +
+                            "</tr>";
+                            console.log(row)
+                            $('#tablBookings > tbody:last-child').append(row);
+                        });
+                    }
+                });
+            });
+    </script>
+  </body>
+</html>

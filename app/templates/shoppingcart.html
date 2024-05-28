@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre - Shopping Cart{% endblock %}
+{% block style %}shoppingcart.css{% endblock %}
+{% block content %}
+    <div class="cart-item">
+        <p>
+            You have <span id="item"></span> item in the shopping cart
+        </p>
+        <table id="items" class="table item-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+                <tbody></tbody>
+                <tfoot></tfoot>
+            </thead>
+        </table>
+    </div>
+    <div class="cart-commands">
+        <button id="next">Next</button>
+    </div>
+{% endblock %}
+{% block script %}
+<script>    
+    $(document).ready(function(){
+        var items = JSON.parse(localStorage.getItem('cart'));
+        var total = 0;
+        var discount = null;
+        var discount_amount = 0;
+        $.each(items, function(index, item){
+            console.log(item);
+            total = total + item.price;
+            $('#items tbody').append(
+                "<tr>" +
+                "<td>" + (index+1) + "</td><td>" +item.item+"</td><td>"+item.price+"</td>" +
+                '<td><button class="remove" id="remove'+index+'">Remove</button></td>' +
+                "</tr>"
+            );
+        });
+
+        $('#next').on('click', function(){
+                    window.location.href = "/checkout";
+        });
+
+        $('.remove').on('click', function(e){
+            var index = e.target.id.replace('remove','');
+            console.log(index);
+            var cart = JSON.parse(localStorage.getItem('cart'));
+            var newCart = [];
+            $.each(cart, function(i, c){
+                if(i != index) {
+                    newCart.push(c); 
+                }
+            });
+            localStorage.setItem('cart', JSON.stringify(newCart));
+
+            window.location.reload();
+        });
+
+        console.log(items[0]);
+        if(items[0].type === "Membership") {
+            grand_total = total;            
+        } else {
+            var discount_url = '/discounts/apply?item_type='+items[0].type+'&item_qty='+items.length+'&item_total='+total;
+            $.getJSON(discount_url, function(d){
+                localStorage.setItem('discount', JSON.stringify(d));
+                discount = d.discount;
+                console.log("From:", d);
+                $('#item').text(items.length);
+                console.log("Discount:", discount);
+                if(discount) {
+                    discount_amount = discount.amount;
+                }
+                var total_discount = ((total * discount_amount) / 100);
+                grand_total = total - total_discount;
+                $('#items tfoot').append(
+                    "<tr>" +
+                    '<th colspan="2">Total</th><th>'+total+'</th><th></th>'+
+                    "</tr>" +
+                    "<tr>" +
+                    '<th colspan="2">Discount</th><th>'+total_discount+'</th><th></th>'+
+                    "</tr>" +
+                    '<th colspan="2">Grand Total</th><th>'+grand_total+'</th><th></th>'+
+                    "</tr>" 
+                );
+            });
+        }
+    });
+</script>
+{% endblock %}

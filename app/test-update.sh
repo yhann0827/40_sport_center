@@ -1,0 +1,1 @@
+curl -X PUT -H "Content-Type: application/json}" -d '{ "first_name": "John", "last_name": "Smith", "username": "john.smith@test.py", "password": "xXcCvVbBnNmM", "address": "123 Drive, Leeds LS1 11A", "email": "john.smith@test.py", "date_of_birth": "2003-01-01T00:00:00", "user_type": "CUSTOMER" }' http://127.0.0.1:5000/users/20

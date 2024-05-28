@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="/static/image/favicon.ico">
+    <link rel="stylesheet" text="text/css" href="/static/styles/{% block style %}{% endblock %}" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!--navigation bar-->
+    <div class="navigation_div">
+      <img src="/static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+      <div class="navigation_link">
+        <a href="/">HOME</a>
+        <a href="/sportsbooking">SPORTS</a>
+        <a href="/classbooking">CLASS</a>
+        {% if session['loggedin'] != None %}
+        <a href="/booking">MY BOOKING</a>
+        <a href="/account">MY ACCOUNT</a>
+        <a href="/logout">LOG OUT</a>
+        {% else %}
+        <a href="/login">LOG IN</a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% block content %}{% endblock %}
+    <div class="footer">
+      <img src="/static/image/logo.PNG" alt="Logo" class="footer__logo" />
+      <div class="list">
+        <div class="title">Services</div>
+        <a href="/sportsbooking" class="list__link">Sports Booking</a>
+        <a href="/classbooking" class="list__link">Class Booking</a>
+        <a href="/membership" class="list__link">Membership</a>
+      </div>
+
+      <div class="list">
+        <div class="title">Contact Us</div>
+        <a href="" class="list__link">Facebook</a>
+        <a href="" class="list__link">Instagram</a>
+        <a href="" class="list__link">Twitter</a>
+      </div>
+
+      <div class="copyright">Copyright @40SportsCentre2023</div>
+    </div>
+    {% block script %}
+    {% endblock %}
+  </body>
+</html>

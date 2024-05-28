@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Sports Booking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="static/styles/sportsbooking.css"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- <script src="main.js"></script> -->
+  </head>
+  <body>
+    <div class="navigation_div">
+      <img src="static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+      <div class="navigation_link">
+        <a href="/">HOME</a>
+        <a href="/sportsbooking">SPORTS</a>
+        <a href="/classbooking">CLASS</a>
+        {% if session['loggedin'] != None %}
+        <a href="/booking">MY BOOKING</a>
+        <a href="/account">MY ACCOUNT</a>
+        <a href="/logout">LOG OUT</a>
+        {% else %}
+        <a href="/login">LOG IN</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="booking__outerdiv">
+      <div class="image__div">
+        <img
+          src="static/image/basketball.PNG"
+          alt="Photo of basketball"
+          class="image"
+          height="250"
+        />
+        <img
+          src="static/image/badminton.PNG"
+          alt="Photo of badminton"
+          class="image"
+          height="250"
+        />
+        <img
+          src="static/image/gym.PNG"
+          alt="Photo of gym"
+          class="image"
+          height="250"
+        />
+      </div>
+
+      <div class="intro__div">
+        <p class="header">Book With Ease, Play With Peace!</p>
+        <p class="desc">
+          Perfect place to unwind from the stresses of the day.
+        </p>
+        <button class="book__button">BOOK NOW</button>
+      </div>
+
+      <div class="image__div">
+        <img
+          src="static/image/tennis.PNG"
+          alt="Photo of Tennis"
+          class="image"
+          height="250"
+        />
+        <img
+          src="static/image/squash.PNG"
+          alt="Photo of Squash"
+          class="image"
+          height="250"
+        />
+        <img
+          src="static/image/swimming pool.PNG"
+          alt="Photo of Swimming Pool"
+          class="image"
+          height="250"
+        />
+      </div>
+    </div>
+
+    <div class="pricelist__div">
+      <p class="header">Price List</p>
+      <div class="pricing">
+        <p>Facilities and Pricing</p>
+        <p>(For Non-Members)</p>
+      </div>
+      <div class="horizontal__line"></div>
+      <table class="price__table">
+        <tr>
+          <td style="width: 60%">Tennis Court</td>
+          <td>£15 per hour</td>
+        </tr>
+        <tr>
+          <td>Basketball Court</td>
+          <td>£15 per hour</td>
+        </tr>
+        <tr>
+          <td>Squash Court</td>
+          <td>£20 per hour</td>
+        </tr>
+        <tr>
+          <td>Football Field</td>
+          <td>£15 per hour</td>
+        </tr>
+        <tr>
+          <td>Badminton Court</td>
+          <td>£15 per hour</td>
+        </tr>
+        <tr>
+          <td>Swimming Pool</td>
+          <td>£7 per individual entry</td>
+        </tr>
+        <tr>
+          <td>Gym</td>
+          <td>£5 per individual entry</td>
+        </tr>
+        <tr>
+          <td>Functional Studio</td>
+          <td>£6 per individual entry</td>
+        </tr>
+      </table>
+      <div class="pricing__members">
+        <p>Booking are free of charge for all members</p>
+        <p>(Included in memberships)</p>
+      </div>
+    </div>
+    {% if session['loggedin'] != None %}
+    <div class="reservation__outerdiv">
+      <h1 class="header">Make Your Reservation</h1>
+      <div class="reservation__div">
+        <!-- <div class="question">
+          Are you a member?
+          <div class="option">
+            <input type="checkbox" /> Yes <input type="checkbox" /> No
+          </div>
+        </div> -->
+        <div class="question">
+          Date and Time
+          <div class="option">
+            <input id="booking-date" type="date" />
+            <label for="start-time">From: </label>
+            <input id="start-time" type="time" />
+            <label for="end-time">To: </label>
+            <input id="end-time" type="time" />
+          </div>
+        </div>
+        <div class="question">
+          Facility Type
+          <div class="option">
+            <select
+              id="facility_list"
+              class="facility_list"
+              name="facility_list"
+            >
+              <option value="none" selected disabled hidden>
+                -- Select a Facility --
+              </option>
+            </select>
+          </div>
+        </div>
+        <button id="btn-check-availability">Check Availability</button>
+        <div id="message" class="availability">
+          
+        </div>
+
+        <button id="btnAdd" disabled>Add to Basket</button>
+      </div>
+    </div>
+    {% endif %}
+    <div class="footer">
+      <img src="static/image/logo.PNG" alt="Logo" class="footer__logo" />
+      <div class="list">
+        <div class="title">Services</div>
+        <a href="static/sportsbooking" class="list__link">Sports Booking</a>
+        <a href="static/classbooking" class="list__link">Class Booking</a>
+        <a href="static/membership" class="list__link">Membership</a>
+      </div>
+
+      <div class="list">
+        <div class="title">Contact Us</div>
+        <a href="" class="list__link">Facebook</a>
+        <a href="" class="list__link">Instagram</a>
+        <a href="" class="list__link">Twitter</a>
+      </div>
+
+      <div class="copyright">Copyright @40SportsCentre2023</div>
+    </div>
+    <script>
+           $('document').ready(function() {
+              $('#btnAdd').on('click', function(){
+                window.location.href = "/checkout"
+              });
+                $.ajax({
+                    url: "/facilities",
+                    cache: false
+                }).done(function(data){
+                    if(data.facilities) {
+                        $.each(data.facilities, function(index, facility){
+                            var f = JSON.parse(facility);
+                            var option = '<option value="' + f.facility_name + '">'+
+                              f.facility_name +
+                            "</option>";
+                            $('#facility_list').append(option);
+                        });
+                    }
+                });
+                $('#btn-check-availability').on('click', function(){
+                  var data = JSON.stringify(availability_data());
+                  console.log("Data: ", data);
+                  $.ajax({
+                    url: '/bookings/check',
+                    type: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    contentType: "application/json",
+                    success: function (d) {
+                      console.log('Success', d);
+                      $('#message').html('The facility is available on the selected time slot.');
+                      $('#btnAdd').attr('disabled',false);
+                    },
+                    error: function () { 
+                      $('#message').html('The facility is not available on the selected time slot.');
+                      $('#btnAdd').attr('disabled',true);
+                    }
+                  });
+                });
+            });
+
+            var availability_data = function() {
+              s = new Date($('#booking-date').val() + "T" + $('#start-time').val());
+              e = new Date($('#booking-date').val() + "T" + $('#end-time').val());
+              return {
+                facility_name: $('#facility_list option:selected').text(),
+                check_start_time: s,
+                check_end_time: e
+              };
+            };
+    </script>
+  </body>
+</html>

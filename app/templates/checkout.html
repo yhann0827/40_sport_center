@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>40 Sports Centre-Checkout page</title>
+    <link rel="stylesheet" text="text/css" href="/static/styles/checkout.css" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>   
+  </head>
+  <body>
+    
+    <!--navigation bar-->
+    <div class="navigation_div">
+      <img src="/static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+      <div class="navigation_link">
+        <a href="/">HOME</a>
+        <a href="/sportsbooking">SPORTS</a>
+        <a href="/classbooking">CLASS</a>
+        {% if session['loggedin'] != None %}
+        <a href="/booking">MY BOOKING</a>
+        <a href="/account">MY ACCOUNT</a>
+        <a href="/logout">LOG OUT</a>
+        {% else %}
+        <a href="/login">LOG IN</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <!--Checkout Page-->
+    <div class="checkoutpage__outerdiv">
+      <div class="checkoutInfoPage__div">
+        <form id="frmPay">
+        <p id="checkoutinfo__word">Checkout</p>
+        <p id="enterdetail_word">Enter your payment details: </p>
+        <div class="Information__div">
+          <div class="details__text">
+            <p class="input-title">Card Information</p>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                id="card_number"
+                name="card_number"
+                placeholder="Insert your card number "
+                class="details__input1"
+                minlength="16"
+                required
+              />
+            </div>
+            <div class="details__input-wrapper details__input-wrapper--columns">
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="card_expiry"
+                  name="card_expiry"
+                  placeholder="MM/YY"
+                  class="details__input"
+                  required
+                />
+              </div>
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="cvc"
+                  name="CVC"
+                  placeholder="CVC"
+                  class="details__input"
+                  minlength="3"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+        <!-- <div class="details__text2">
+          <p class="input-title">Name On Card</p>
+            <input
+              type="text"
+              name="name"
+              placeholder=""
+              class="details__input"
+            />
+        </div> -->
+        
+        <div class="details__text3">
+          <p class="input-title">Country</p>
+              <div class="country-input">
+                <select id="country" name="country" required>
+                  <option value="">--Select Country--</option>
+                  <option value="usa">USA</option>
+                  <option value="canada">Canada</option>
+                  <option value="uk">UK</option>
+                <!-- Add more countries here -->
+                </select>
+            </div>
+        </div>
+
+        <div class="details__text4">
+          <p class="input-title">Billing Address</p>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                id="billing_address"
+                name="StreetAddress"
+                placeholder="Street Address "
+                class="details__input1"
+                required
+              />
+            </div>
+            <!-- <div class="details__input-wrapper">
+              <input
+                type="text"
+                name="StreetAddress2"
+                placeholder="Street Address Line 2 "
+                class="details__input1"
+              />
+            </div>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                name="StreetAddress3"
+                placeholder="Street Address Line 3"
+                class="details__input1"
+              />
+            </div> -->
+            <div class="details__input-wrapper details__input-wrapper--columns">
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  placeholder="City"
+                  class="details__input"
+                  required
+                />
+              </div>
+              <div class="details__input-column">
+                <input
+                  type="text"
+                  id="state"
+                  name="State/Province"
+                  placeholder="State/Province"
+                  class="details__input"
+                  required
+                />
+              </div>
+            </div>
+            <div class="details__input-wrapper">
+              <input
+                type="text"
+                id="postal"
+                name="zipcode"
+                placeholder="Postal/Zipcode"
+                class="details__input1"
+                required
+              />
+            </div>
+        </div>
+
+        <div class="save-card-details">
+          <label for="save-card">Save Card Details:</label>
+          <input type="checkbox" id="save-card" name="save-card" />
+        </div>
+
+        <div class="payButton">
+          <input type="submit" id="paylink" value="PAY"> 
+        </div>
+
+           
+        </div>
+        </form>
+      </div>  
+    </div>
+
+
+    <div class="footer">
+        <img src="/static/image/logo.PNG" alt="Logo" class="footer__logo" />
+        <div class="list">
+          <div class="title">Services</div>
+          <a href="/sportsbooking" class="list__link">Sports Booking</a>
+          <a href="/classbooking" class="list__link">Class Booking</a>
+          <a href="/membership" class="list__link">Membership</a>
+        </div>
+  
+        <div class="list">
+          <div class="title">Contact Us</div>
+          <a href="" class="list__link">Facebook</a>
+          <a href="" class="list__link">Instagram</a>
+          <a href="" class="list__link">Twitter</a>
+        </div>
+  
+        <div class="copyright">Copyright @40SportsCentre2023</div>
+      </div>
+      <script>
+        var get_date = function(d) {
+          return new Date('20' + d.substring(3) + '-' + d.substring(0,2) + '-01');
+        };
+
+        var card_data = function(){
+          return {
+            card_number: $('#card_number').val(),
+            cvc: $('#cvc').val(),
+            expiry_date: get_date($('#card_expiry').val()),
+            billing_address: $('#billing_address').val(),
+            country: $('#country option:selected').text(),
+            city: $('#city').val(),
+            state: $('#state').val(),
+            postal: $('#postal').val(),
+            save: $('#save-card:checked').val()
+          }
+        };
+        $(document).ready(function(){
+          $('#frmPay').on('submit', function(e){
+            e.preventDefault();
+            data = JSON.stringify(card_data());
+            $.ajax({
+                url: '/payments',
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                contentType: "application/json",
+                success: function () {
+                  },
+                error: function (d) { 
+                }
+            });
+          });
+        });
+      </script>
+  </body>
+</html>

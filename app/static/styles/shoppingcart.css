@@ -1,0 +1,273 @@
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: black;
+}
+/*****************/
+/*NAVIGATION BAR*/
+/*****************/
+.navigation_div {
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* position: fixed; */
+}
+
+#logo {
+  width: 8%;
+  height: 8%;
+  padding-left: 40px;
+}
+.navigation_div .navigation_link a {
+  color: white;
+  padding: 20px;
+  text-decoration: none;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 17px;
+}
+
+.navigation_div .navigation_link {
+  margin: 5px 30px 5px 30px;
+  display: flex;
+}
+
+/*****************/
+/*GET STARTED*/
+/*****************/
+.startpage__outerdiv {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.startpage__div {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5vw;
+}
+#gymwallpaperimg {
+  width: 100%;
+  height: 80%;
+  /* position: relative; */
+}
+
+#welcome_word {
+  color: white;
+  font-size: 75px;
+  margin: 10px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+#center_word {
+  color: white;
+  margin: 10px;
+  font-size: 90px;
+  font-weight: bold;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+.startButton {
+  margin: 10px;
+}
+#startlink {
+  text-align: center;
+  margin: 10px;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  background-color: #242424;
+  color: white;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+/*****************/
+/*SPORTS BOOKING*/
+/*****************/
+.sportsbooking__outerdiv {
+  height: 550px;
+  background-color: #b6b5bc;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.sportsbooking__div {
+  display: flex;
+  margin: 50px;
+}
+
+.sportsbooking__intro {
+  margin: 40px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  padding: 20px;
+  width: 50%;
+}
+
+#sportsbooking__word {
+  font-size: 50px;
+  font-weight: bold;
+  padding-bottom: 20px;
+}
+
+#sportsbooking__desc {
+  width: 90%;
+  /* background-color: red; */
+  font-size: 20px;
+  line-height: 30px;
+  margin-bottom: 35px;
+}
+
+#booksportslink {
+  text-align: center;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  background-color: #242424;
+  color: white;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+/*****************/
+/*FOOTER*/
+/*****************/
+.footer {
+  height: 150px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer__logo {
+  height: 100px;
+  margin-top: 25px;
+  margin-left: 100px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.list__link {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  color: white;
+  padding-bottom: 5px;
+}
+.title {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 25px;
+}
+.copyright {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  margin-top: 100px;
+  margin-right: 80px;
+}
+
+.table,th,td {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  border:1px solid;
+  border-color: white;
+  border-collapse:collapse;
+}
+
+.table,th,td {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  border:1px solid;
+  border-color: white;
+  border-collapse:collapse;
+}
+
+.table {
+  margin-left: auto;
+  margin-right: auto;
+  width:75%; 
+  min-width:400px;
+}
+.table th {
+  font-size:20px;
+  text-align:center;
+  color: white;
+  background-color: #5b5b5b;
+  padding:10px;
+}
+
+.table td {
+  font-size:15px;
+  text-align:center;
+  color:white;
+  background-color: #363636;
+  padding: 10px;
+}
+
+.item-table {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1.8em;
+  color: white;
+  background-color: black;
+  border: solid 1px white;
+  margin-top: 10px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.cart-item {
+  color: white;
+  background-color: black;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 20px;
+  width: 1268px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
+}
+
+.cart-item > p {
+  color: white;
+  background-color: black;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 20px;
+  width: 1268px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px;
+}
+
+.cart-commands {
+  color: white;
+  background-color: black;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 20px;
+  width: 200px;
+  margin-left: 65%;
+  margin-right: auto;
+  padding: 20px;
+}
+
+.cart-commands button {
+  background-color:black;
+  color: white;
+  width: 100px;
+  padding:10px;
+}
+
+

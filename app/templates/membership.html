@@ -1,0 +1,171 @@
+
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre - Membership{% endblock %}
+{% block style %}membership.css{% endblock %}
+{% block content %}
+<div class="membership__outerdiv">
+  <div class="membership__intro">
+    <div class="header">Become A Member</div>
+    <div class="slogan">
+      Join us and unleash your full potential with our membership!
+    </div>
+    <a href="" class="signup__link">Sign Up Now</a>
+  </div>
+
+  <div><img src="/static/image/member.jpg" alt="" class="member__img" /></div>
+</div>
+
+<div class="benefits__outerdiv">
+  <p class="benefits__header">
+    Unlock exclusive benefits and join our community today!
+  </p>
+  <div class="benefits">
+    <img
+      src="/static/image/gymfacilities.PNG"
+      alt="Photo of facilities"
+      class="benefits__img"
+    />
+    <div class="description">
+      <p class="benefits__title">Access to a Wide Range of Facilities</p>
+      Members will have access to all of our sport facilities, including
+      courts, pitches, swimming pools, and more. With a membership,
+      customers can book and use these facilities at their convenience,
+      ensuring they always have access to the equipment they need for their
+      workouts.
+    </div>
+  </div>
+
+  <div class="benefits">
+    <img
+      src="/static/image/classes.PNG"
+      alt="Photo of Class"
+      class="benefits__img"
+    />
+    <div class="description">
+      <p class="benefits__title">Discounted Classes</p>
+      Members will have access to a wide range of exercise classes, from
+      yoga and Pilates to high-intensity interval training (HIIT) and spin
+      classes. With a membership, customers can book these classes at a
+      discounted rate, making it easier to fit group exercise into their
+      busy schedules.
+    </div>
+  </div>
+
+  <div class="benefits">
+    <img
+      src="/static/image/coach.png"
+      alt="Photo of personal coach"
+      class="benefits__img"
+    />
+    <div class="description">
+      <p class="benefits__title">Personalised Training Plans</p>
+      Our expert trainers will work with members to develop personalized
+      training plans that are tailored to their goals and fitness level.
+      With regular check-ins and support from our team, members can make
+      real progress towards their health and fitness goals, and stay
+      motivated along the way
+    </div>
+  </div>
+</div>
+<div class="register__outerdiv">
+  <h1 class="register__header">Membership Registration</h1>
+  <div class="step__div">
+    <div class="step">
+      <div class="step__label">Step 1</div>
+      <div class="step__desc">
+        Select a membership plan that woks for you
+      </div>
+    </div>
+
+    <div class="option__outerdiv">
+      <div class="option__div">
+        <div class="option">
+          <p class="type">Monthly</p>
+          <p class="price">£35</p>
+          <p class="price__desc">per month</p>
+          <p class="short__desc">
+            Ongoing access to the facilities and classes
+          </p>
+        </div>
+        <div><button id="join-monthly" class="join">Join</button></div>
+      </div>
+
+      <div class="option__div">
+        <div class="option">
+          <p class="type">Annually</p>
+          <p class="price">£300</p>
+          <p class="price__desc">per annual</p>
+          <p class="save">(Save 40%)</p>
+          <p class="short__desc">
+            12 month access to the facilities and classes
+          </p>
+        </div>
+        <div><button id="join-annually" class="join">Join</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="step__div">
+    <div class="step">
+      <div class="step__label">Step 2</div>
+      <div class="step__desc">Choose Your Payment Method</div>
+    </div>
+    <div class="payment__div">
+      <div class="payment">
+        <a href="/cart" class="payment__link">
+          <div>Credit/Debit Card</div>
+        </a>
+        <div>
+          <img src="/static/image/card.png" alt="Image of card" class="image" />
+        </div>
+      </div>
+
+      <div class="payment">
+        <a href="/static/image/applepay.png" class="payment__link">
+          <div>Apple Pay</div>
+        </a>
+        <div>
+          <img
+            src="/static/image/applepay.png"
+            alt="Image of card"
+            class="image__apple"
+          />
+        </div>
+      </div>
+
+      <div class="payment">
+        <a href="" class="payment__link">
+          <div>PayPal</div>
+        </a>
+        <div>
+          <img src="/static/image/paypal.png" alt="Image of Paypal" class="image" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+  class CartItem {
+    constructor(item, price) {
+      this.id = null;
+      this.item = item;
+      this.price = price;
+      this.type = "Membership";
+    }
+  }
+  
+  $(document).ready(function(){
+    $('#join-annually').on('click', function(){
+      var cart = [];
+      cart.push(new CartItem("Annual Membership", 300));
+      localStorage.setItem('cart', JSON.stringify(cart));
+    });
+    $('#join-monthly').on('click', function(){
+      var cart = [];
+      cart.push(new CartItem("Monthly Membership", 35));
+      localStorage.setItem('cart', JSON.stringify(cart));
+    });
+  });
+</script>
+{% endblock %}

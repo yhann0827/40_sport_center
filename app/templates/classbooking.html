@@ -1,0 +1,275 @@
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre - Class Booking{% endblock %}
+{% block style %}classbooking.css{% endblock %}
+{% block content %}
+<div class="booking__outerdiv">
+  <div class="/static/image__div">
+    <img
+      src="/static/image/yoga.PNG"
+      alt="Photo of yoga class"
+      class="/static/image"
+      height="250"
+    />
+    <img
+      src="/static/image/bodypump.PNG"
+      alt="Photo of baody pump"
+      class="/static/image"
+      height="250"
+    />
+    <img
+      src="/static/image/bodycombat.PNG"
+      alt="Photo of body combat"
+      class="/static/image"
+      height="250"
+    />
+  </div>
+
+  <div class="intro__div">
+    <p class="header">Book Easily, Train Flexibly!</p>
+    <p class="desc">With over 15 types of exercse classes</p>
+    <button class="book__button">BOOK NOW</button>
+  </div>
+
+  <div class="/static/image__div">
+    <img
+      src="/static/image/spin.PNG"
+      alt="Photo of spin"
+      class="/static/image"
+      height="250"
+    />
+    <img
+      src="/static/image/zumba.PNG"
+      alt="Photo of Zumba"
+      class="/static/image"
+      height="250"
+    />
+    <img
+      src="/static/image/step.PNG"
+      alt="Photo of Step"
+      class="/static/image"
+      height="250"
+    />
+  </div>
+</div>
+
+<div class="pricelist__div">
+  <p class="header">Price List</p>
+  <div class="pricing">
+    <p>Facilities and Pricing</p>
+    <p>(For Non-Members)</p>
+  </div>
+  <div class="horizontal__line"></div>
+  <div class="pricetable__div">
+    <table class="price__table">
+      <tr>
+        <td>Yoga</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Zumba</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Pilates</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Kung Fu</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Boxercise</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Kickboxing</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Cycle Power</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Lane Swim</td>
+        <td>£12 per session</td>
+      </tr>
+    </table>
+
+    <table class="price__table">
+      <tr>
+        <td>Body Jam</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Hiit</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Body Pump</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Body Attack</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Body Combat</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Les Mills Spin</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Les Mills Step</td>
+        <td>£12 per session</td>
+      </tr>
+      <tr>
+        <td>Cycle Beat</td>
+        <td>£12 per session</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="pricing__members">
+    <p>Booking are free of charge for all members</p>
+    <p>(Included in memberships)</p>
+  </div>
+</div>
+{% if session['loggedin'] != None %}
+<div class="reservation__outerdiv">
+  <h1 class="reservation__header">Make Your Reservation</h1>
+  <div class="reservation__div">
+    <!-- <div class="question">
+      Are you a member?
+      <div class="option">
+        <input type="checkbox" /> Yes <input type="checkbox" /> No
+      </div>
+    </div> -->
+    <div class="question">
+      Date and Time
+      <div class="option">
+        <input id="booking-date" type="date" required />
+        <label for="">From: </label>
+        <input id="start-time" type="time" required />
+        <label for="">To: </label>
+        <input id="end-time" type="time" required />
+      </div>
+    </div>
+    <div class="question">
+      Class/Session
+      <div class="option">
+        <select
+        id="class_list"
+        class="class_list"
+          name="class_list"
+          required
+        >
+          <option value="none" selected disabled hidden>
+            -- Select a Class --
+          </option>
+        </select>
+      </div>
+    </div>
+    <button id="btn-check-availability">Check Availability</button>
+    <div id="message" class="availability">
+    </div>
+
+    <button id="btnAdd" disabled>Add to Basket</button>
+    <button id="btnCheckout" disabled>Checkout</button>
+  </div>
+</div>
+{% endif %}
+{% endblock %}
+{% block script %}
+<script>
+  var cart = [];
+  class CartItem {
+    constructor(id, item, price, type) {
+      this.id = id;
+      this.item = item;
+      this.price = price;
+      this.type = type;
+    }
+  }
+
+  $(document).ready(function(){
+    var class_t = null;
+    var stored_cart = localStorage.getItem('cart');
+    if(stored_cart)
+      cart = JSON.parse(stored_cart);
+    var class_id = null;
+    console.log(cart);
+
+    $('#btnAdd').on('click', function(){
+      console.log("Class:", class_t);
+      var class_name = class_t.class_name + '-' + $('#booking-date').val() + '-' + $('#start-time').val() + '-' + $('#end-time').val();
+      var order = new CartItem(class_t.class_id, class_name, class_t.price, "Class");
+      cart.push(order);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      console.log(cart);
+      $('#btnCheckout').attr('disabled',false);
+    });
+
+    $('#btnCheckout').on('click', function(){
+        window.location.href = '/cart';
+    });
+
+    var availability_data = function() {
+      if($('#booking-date').val() && $('#start-time').val() && $('#end-time').val()) {
+        s = new Date($('#booking-date').val() + "T" + $('#start-time').val());
+        e = new Date($('#booking-date').val() + "T" + $('#end-time').val());
+        return {
+          class_name: $('#class_list option:selected').text(),
+          check_start_time: s,
+          check_end_time: e
+        };
+      }
+      $('#message').html("Class, date and time are required");
+      return null;
+    };
+
+    $.ajax({
+          url: "/classes",
+          cache: false
+      }).done(function(data){
+          if(data.classes) {
+            var list = []            
+              $.each(data.classes, function(index, c){
+                if(list.indexOf(c.class_name) < 0) {
+                  list.push(c.class_name);
+                  var option = '<option value="' + c.class_name + '">'+
+                    c.class_name +
+                  "</option>";
+                  $('#class_list').append(option);
+                }
+              });
+          }
+      });
+ 
+      $('#btn-check-availability').on('click', function(){
+        var a_data = availability_data();
+        console.log("Form data:", a_data);
+        if(a_data) {
+          var data = JSON.stringify(a_data);
+          $.ajax({
+            url: '/bookings/class/check',
+            type: 'POST',
+            data: data,
+            contentType: "application/json",
+            success: function (d) {
+              console.log('Success', d);
+              class_t = d.class;
+              $('#message').html('The class is available on the selected time slot.');
+              $('#btnAdd').attr('disabled',false);
+            },
+            error: function () { 
+              $('#message').html('The class is not available on the selected time slot.');
+              $('#btnAdd').attr('disabled',true);
+            }
+          });
+        }
+      });
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Manage Classes</title>
+    <link rel="stylesheet" text="text/css" href="/static/styles/manageclass.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!--navigation bar-->
+    <div class="navigation_div">
+      <img src="/static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+      <div class="navigation_link">
+        <a href="/manager/home">HOME</a>
+        <a href="/manager/sports">SPORTS</a>
+        <a href="/manager/class">CLASS</a>
+        <a href="booking.html">TRACK MY BOOKING</a>
+        <a href="account.html">MY ACCOUNT</a>
+      </div>
+    </div>
+    <div class="manage-sports" id="edit" style="display: none;">
+        <form id="edit-form">
+            <div class="details__text">
+            <p>Class Name*</p>
+            <input
+                type="text"
+                id="e-class_name"
+                name="class_name"
+                placeholder="Enter Class Name"
+                class="details__input"
+                required
+            />
+            </div>
+
+            <div class="details__text">
+            <p>Capacity *</p>
+            <input
+                type="number"
+                id="e-class_capacity"
+                name="class_capacity"
+                placeholder="Enter Capacity"
+                class="details__input"
+                required
+            />
+            </div>
+
+            <div class="details__text">
+            <p>Price*</p>
+            <input
+                type="number"
+                step=".01"
+                id="e-price"
+                name="price"
+                placeholder="Enter Price"
+                class="details__input"
+                required
+            />
+            </div>
+
+                <div class="buttons">
+                    <input
+                    type="submit"
+                    name="save"
+                    value="Save"
+                    class="button"
+                    />
+                    <input
+                    id="btn-edit-cancel"
+                    type="button"
+                    name="close"
+                    value="Close"
+                    class="button"
+                    />        
+                </div>
+                <input type="hidden" id="e-class_id" />
+                <p id="#edit-messages"></p>
+        </form>
+        <p class="message" id="filter-message"></p>
+    </div>
+    <div class="manage-sports" id="main">
+        <p class="title">Manage Classes</p>
+        <table class="table" id="classes-table">
+            <thead>
+                <tr>
+                    <th>Classes</th>
+                    <th>Description</th>
+                    <th>Capacity</th>
+                    <th>Price &#47; &#163;</th> 
+                    <th>Time</th>
+                    <th></th> 
+                </tr>    
+            </thead>
+            <tbody>                
+            </tbody>
+        </table>
+        <script>
+            $(document).ready(function(){
+                var createClassData = function() {
+                    return {
+                        class_id: $('#e-class_id').val(),
+                        class_name: $('#e-class_name').val(),
+                        class_capacity: $('#e-class_capacity').val(),
+                        price: $('#e-price').val()
+                    };
+                }
+                var populateClasses = function(classes, facilities) {
+                    $.each(classes, function(index, c) {
+                        var facility = facilities.find(function(f){
+                            return c.facility_id === f.facility_id;
+                        });
+                        var start_time = new Date(facility.start_time).toLocaleTimeString();
+                        var end_time = new Date(facility.end_time).toLocaleTimeString();
+
+                        $('#classes-table tbody').append(
+                            "<tr>"+
+                                "<td>"+c.class_name+"</td>"+
+                                "<td>"+facility.facility_name+"</td>"+
+                                "<td>"+c.class_capacity+"</td>"+
+                                "<td>"+c.price+"</td>"+
+                                "<td>"+ start_time + " - " + end_time + "</td>"+
+                                '<td><button id="edit-'+c.class_id+'" class="edit-class">Edit</button></td>'+
+                            "</tr>"
+                        );
+                    });
+
+                    $('.edit-class').on('click', function(e){
+                        var stored_classes = JSON.parse(localStorage.getItem('classes'));
+                        var class_id = e.target.id.substring(5);
+                        var class_ = stored_classes.find(function(c){
+                            return class_id == c.class_id;
+                        });
+                        $('#edit').show();
+                        $('#main').hide();
+                        $('#e-class_id').val(class_.class_id);
+                        $('#e-class_name').val(class_.class_name);
+                        $('#e-class_capacity').val(class_.class_capacity);
+                        $('#e-price').val(class_.price);
+                    });
+
+                    $('#btn-edit-cancel').on('click',function(){
+                        $('#edit').hide();
+                        $('#main').show();
+                    });
+
+                    $('#edit-form').on("submit", function(e){
+                        console.log(createClassData());
+                        e.preventDefault();
+                        $.ajax({
+                            url: '/classes',
+                            type: 'PUT',
+                            data: JSON.stringify(createClassData()),
+                            dataType: 'json',
+                            contentType: "application/json",
+                            success: function () {
+                                window.location.reload();
+                            },
+                            error: function (d) { 
+                                $('#edit-messages').append(d.responseText);
+                            },
+                        });
+                    });
+                };
+
+                $.ajax({
+                    url: "/classes/list",
+                    cache: false,
+                    type: 'GET'
+                }).done(function(data){
+                    var facilities = data.facilities;
+                    if(data.classes) {
+                        var classes = JSON.stringify(data.classes);
+                        localStorage.setItem('classes', classes);
+                        localStorage.setItem('facilities', JSON.stringify(facilities));
+                        populateClasses(data.classes, facilities);
+                    }
+                });
+            });
+        </script>
+  </body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Login/Sign Up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/styles/login.css" />
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- <script src="main.js"></script> -->
+  </head>
+  <body>
+    <div class="navigation_div">
+      <img src="/static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+      <div class="navigation_link">
+        <a href="/">HOME</a>
+        <a href="/sportsbooking">SPORTS</a>
+        <a href="/classbooking">CLASS</a>
+        {% if session['loggedin'] != None %}
+        <a href="/booking">MY BOOKING</a>
+        <a href="/account">MY ACCOUNT</a>
+        <a href="/logout">LOG OUT</a>
+        {% else %}
+        <a href="/login">LOG IN</a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="outerdiv">
+      <div class="loginSignup__outerdiv">
+        <div class="login__div">
+          <div class="login__word">LOGIN</div>
+          <div class="details">
+            <form id="frmLoginSubmit">
+              <div class="details__text">
+                <p>Email*</p>
+                <input
+                  type="text"
+                  id="login_username"
+                  name="username"
+                  placeholder="Enter Your Email"
+                  class="details__input"
+                  required
+                />
+              </div>
+
+              <div class="details__text">
+                <p>Password*</p>
+                <input
+                  type="password"
+                  id="login_password"
+                  name="password"
+                  placeholder="Enter Your Password"
+                  class="details__input"
+                  required
+                />
+              </div>
+            <div class="passworddetails__outerdiv">
+              <div class="rememberme__div">
+                <input type="checkbox" class="rememberme__checkbox" />
+                <div class="rememberme__word">Remember Me</div>
+              </div>
+
+              <div class="forgotpassword__div">
+                <a href="">Forgot Your Password?</a>
+              </div>
+            </div>
+            <input type="submit" name="login" value="Login" class="button" />
+          </form>
+        </div>
+
+          <div class="otheroptions__outerdiv">
+            <div class="otheroptions__div">
+              <div class="signinusing__div">
+                <p>Or Sign In using</p>
+              </div>
+              <div class="options__imgdiv">
+                <a href=""
+                  ><img
+                    src="/static/image/google.png"
+                    alt="Photo of Google"
+                    class="options__img"
+                    id="google"
+                /></a>
+                <a href=""
+                  ><img
+                    src="/static/image/facebook.png"
+                    alt="Photo of Facebook"
+                    class="options__img"
+                    id="facebook"
+                /></a>
+                <a href=""
+                  ><img
+                    src="/static/image/twitter.png"
+                    alt="Photo of Twitter"
+                    class="options__img"
+                    id="twitter"
+                /></a>
+              </div>
+              <div class="otherroles__div">
+                <a href="/employee/login" class="otherroles__link">Login as Employee</a>
+                <a href="/login" class="otherroles__link">Login as Customer</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <img src="/static/image/logo.PNG" alt="Logo" class="footer__logo" />
+      <div class="list">
+        <div class="title">Services</div>
+        <a href="/sportsbooking" class="list__link">Sports Booking</a>
+        <a href="/classbooking" class="list__link">Class Booking</a>
+        <a href="" class="list__link">Membership</a>
+      </div>
+
+      <div class="list">
+        <div class="title">Contact Us</div>
+        <a href="" class="list__link">Facebook</a>
+        <a href="" class="list__link">Instagram</a>
+        <a href="" class="list__link">Twitter</a>
+      </div>
+
+      <div class="copyright">Copyright @40SportsCentre2023</div>
+    </div>
+    <script>
+      var login_data = function() {
+          return {
+              email: $('#login_username').val(),
+              password: $('#login_password').val()
+          }
+      };
+
+      $('document').ready(function() {
+          $('#frmLoginSubmit').submit(function(e) {
+              e.preventDefault();
+              $.ajax({
+                  url: '/users/login',
+                  type: 'POST',
+                  data: JSON.stringify(login_data()),
+                  dataType: 'json',
+                  contentType: "application/json",
+                  success: function () {
+                      localStorage.clear();
+                      console.log('Logged in successfully');
+                      window.location.href = "http://127.0.01:5000/manager/home";
+                   },
+                  error: function (d) { 
+                    $('#messages').append(d.responseText);
+                  }
+              });
+          });
+      });
+
+    </script>  </body>
+</html>

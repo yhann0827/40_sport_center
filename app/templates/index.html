@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}40 Sports Centre{% endblock %}
+{% block style %}home.css{% endblock %}
+{% block content %}
+    <!--Getting Started Page-->
+    <div class="startpage__outerdiv">
+      <div class="startpage__div">
+        <p id="welcome_word">Welcome to</p>
+        <p id="center_word">40 Sports Centre!</p>
+        <div class="startButton">
+          <a href="/login" id="startlink">Get Started</a>
+        </div>
+      </div>
+
+      <!-- <div class="scrollbox" id="scrollbox"></div> -->
+      <img
+        src="/static/image/gym_wallpaper.jpg"
+        alt="Photo of a Gym"
+        id="gymwallpaperimg"
+      />
+    </div>
+
+    <div class="sportsbooking__outerdiv">
+      <div class="sportsbooking__div">
+        <div class="sportsbooking__intro">
+          <p id="sportsbooking__word">Sports Booking</p>
+          <p id="sportsbooking__desc">
+            Book your favourite sports facilities, courts, and pitches in just a
+            few clicks. Find available times and make secure payments
+            hassle-free!
+          </p>
+          <div class="bookButton">
+            <a href="/sportsbooking" id="booksportslink">Book Now</a>
+          </div>
+        </div>
+        <div class="sportsbooking_img">
+          <img
+            src="/static/image/sportsbooking.png"
+            alt="Photo of different types of sports"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="classbooking__outerdiv">
+      <div class="classbooking__div">
+        <div class="classbooking_img">
+          <img src="/static/image/classbooking.png" alt="Photo of a calendar" />
+        </div>
+        <div class="classbooking__intro">
+          <p id="classbooking__word">Class Booking</p>
+          <p id="classbooking__desc">
+            Effortlessly and conveniently schedule and book exercise classes,
+            securing your spot with ease and flexibility.
+          </p>
+          <div class="bookButton">
+            <a href="#scrollbox" id="bookclasslink">View Timetable</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="membership__outerdiv">
+      <div class="membership__div">
+        <div class="membership__intro">
+          <p id="membership__word">Membership Management</p>
+          <p id="membership__desc">
+            Unlock exclusive benefits and gain access to top-notch facilities by
+            becoming a member of 40 Sport Centre!
+          </p>
+          <div class="joinButton">
+            <a href="/membership" id="joinmembershiplink"
+              >Become a Member</a
+            >
+          </div>
+        </div>
+        <div class="membership_img">
+          <img src="/static/image/membership.png" alt="Photo of membership" />
+        </div>
+      </div>
+    </div>
+{% endblock %}

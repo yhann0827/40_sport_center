@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>View Account</title>
+    <link rel="stylesheet" text="text/css" href="/static/styles/viewaccount.css" />
+  </head>
+  <body>
+    <!--navigation bar-->
+    <div class="navigation_div">
+        <img src="/static/image/logo.PNG" alt="Logo of 40 Sports Centre" id="logo" />
+        <div class="navigation_link">
+          <a href="/manager/home">HOME</a>
+          <a href="/manager/sports">SPORTS</a>
+          <a href="/manager/class">CLASS</a>
+          <a href="/manager/staff">TRACK MY BOOKING</a>
+          <a href="/manager/account">MY ACCOUNT</a>
+        </div>
+      </div>
+  
+      <!--Profile Page-->
+      <div class="profilepage__outerdiv">
+          <div class="basicInfoPage__div">
+              <p id="basicinfo__word">Basic Information</p>
+              <div class="Information__div">
+                  <div class="details__text">
+                      <p class="input-title">First Name</p>
+                          <input
+                          type="text"
+                          name="firstname"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+                  <div class="details__text2">
+                      <p class="input-title">Last Name</p>
+                          <input
+                          type="text"
+                          name="lastname"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+                  <div class="details__text3">
+                      <p class="input-title">Date of Birth</p>
+                          <input
+                          type="text"
+                          name="dateofbirth"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+                  <div class="details__text4">
+                      <p class="input-title">Gender</p>
+                          <input
+                          type="text"
+                          name="gender"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+                  <div class="details__text5">
+                      <p class="input-title">Address</p>
+                          <input
+                          type="text"
+                          name="address"
+                          placeholder=""
+                          class="details__input2"
+                          />
+                  </div>
+                  <div class="details__text6">
+                      <p class="input-title">Email</p>
+                          <input
+                          type="text"
+                          name="email"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+                  <div class="details__text7">
+                      <p class="input-title">Contact Number</p>
+                          <input
+                          type="text"
+                          name="contact number"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+              </div>
+          
+          </div>  
+  
+          </div>
+  
+          <div class = "membershippage__div">
+              <p id="membershipinfo__word">Membership Information</p>
+              <div class="Information__div2">
+                  <div class="details__text8">
+                      <p class="input-title">Membership ID</p>
+                          <input
+                          type="text"
+                          name="membership id"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+                  <div class="details__text9">
+                      <p class="input-title">Expiry date</p>
+                          <input
+                          type="text"
+                          name="expiry date"
+                          placeholder=""
+                          class="details__input"
+                          />
+                  </div>
+                  <div class="cancel membership Button">
+                      <a href="" id="cancelmembershiplink">Cancel Membership</a>
+                  </div>
+  
+  
+              </div>
+          </div>   
+      </div>
+
+    <div class="booking__outerdiv">
+        <div class="booking__header"><h1>My Bookings</h1></div>
+        <div class="booking__div">
+          <div>
+            <select
+              class="checkbooking__list"
+              action="change"
+              name="checkbooking_list"
+              method="post"
+            >
+              <option value="pending">Pending Payments</option>
+              <option value="upcoming">Upcoming Bookings</option>
+              <option value="history">Booking History</option>
+            </select>
+          </div>
+  
+          <div class="pendingpayments__outerdiv" id="pending-div">
+            <div class="pendingpayment__div">
+              <input type="checkbox" class="checkbox" />
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                    <!-- <div lass="bookingdetails__info"> -->
+                    <button class="bookingdetails__cancel">Cancel Booking</button>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="pendingpayment__div">
+              <input type="checkbox" class="checkbox" />
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                    <!-- <div lass="bookingdetails__info"> -->
+                    <button class="bookingdetails__cancel">Cancel Booking</button>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="pendingpayment__div">
+              <input type="checkbox" class="checkbox" />
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                    <!-- <div lass="bookingdetails__info"> -->
+                    <button class="bookingdetails__cancel">Cancel Booking</button>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="upcomingbooking__outerdiv" id="upcoming-div">
+            <div class="pendingpayment__div">
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                    <!-- <div lass="bookingdetails__info"> -->
+                    <button class="bookingdetails__cancel">Cancel Booking</button>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="pendingpayment__div">
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                    <!-- <div lass="bookingdetails__info"> -->
+                    <button class="bookingdetails__cancel">Cancel Booking</button>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="pendingpayment__div">
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                    <!-- <div lass="bookingdetails__info"> -->
+                    <button class="bookingdetails__cancel">Cancel Booking</button>
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="bookinghistory__outerdiv" id="history-div">
+            <div class="pendingpayment__div">
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="pendingpayment__div">
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="pendingpayment__div">
+              <div class="bookingdetails__outerdiv">
+                <div class="bookingdetails__header">
+                  <h2>dd-mm-yy</h2>
+                  <h2>Booking ID:</h2>
+                </div>
+                <div class="bookingdetails__div">
+                  <div class="bookingdetails">
+                    <div class="bookingdetails__info">Facility/Class:</div>
+                    <div class="bookingdetails__info">Time:</div>
+                    <div class="bookingdetails__info">Booking Title:</div>
+                    <div class="bookingdetails__info">Booking Amount:</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <script>
+        const select = document.querySelector(".checkbooking__list");
+        const pendingDiv = document.querySelector("#pending-div");
+        const upcomingDiv = document.querySelector("#upcoming-div");
+        const historyDiv = document.querySelector("#history-div");
+  
+        select.addEventListener("change", function () {
+          if (select.value === "upcoming") {
+            pendingDiv.style.display = "none";
+            upcomingDiv.style.display = "block";
+            historyDiv.style.display = "none";
+          } else if (select.value === "history") {
+            pendingDiv.style.display = "none";
+            upcomingDiv.style.display = "none";
+            historyDiv.style.display = "block";
+          } else {
+            pendingDiv.style.display = "block";
+            upcomingDiv.style.display = "none";
+            historyDiv.style.display = "none";
+          }
+        });
+      </script>
+
+        
+  </body>
