@@ -1,0 +1,148 @@
+CREATE TABLE `user` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `date_of_birth` varchar(45) NOT NULL,
+  `user_type` enum('manager','employee','customer') NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_id_UNIQUE` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `discount` (
+  `discount_id` int NOT NULL AUTO_INCREMENT,
+  `discount_amount` decimal(10,2) NOT NULL,
+  `minimum_booking` int NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`discount_id`),
+  UNIQUE KEY `discount_id_UNIQUE` (`discount_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `facility` (
+  `facility_id` int NOT NULL AUTO_INCREMENT,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `facility_name` varchar(45) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`facility_id`),
+  UNIQUE KEY `facility_id_UNIQUE` (`facility_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `booking` (
+  `booking_id` int NOT NULL AUTO_INCREMENT,
+  `facility_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `total_price` decimal(10,2) DEFAULT NULL,
+  `payment_id` int NOT NULL,
+  PRIMARY KEY (`booking_id`),
+  UNIQUE KEY `idbooking_UNIQUE` (`booking_id`),
+  KEY `facility_id_idx` (`facility_id`),
+  KEY `user_id_idx` (`user_id`),
+  KEY `booking_payment_id_idx` (`payment_id`),
+  CONSTRAINT `booking_facility_id` FOREIGN KEY (`facility_id`) REFERENCES `facility` (`facility_id`),
+  CONSTRAINT `booking_payment_id` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`payment_id`),
+  CONSTRAINT `booking_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `payment` (
+  `payment_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `discount_id` int NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`payment_id`),
+  UNIQUE KEY `payment_id_UNIQUE` (`payment_id`),
+  KEY `user_id_idx` (`user_id`),
+  KEY `payment_discount_id_idx` (`discount_id`),
+  CONSTRAINT `payment_discount_id` FOREIGN KEY (`discount_id`) REFERENCES `discount` (`discount_id`),
+  CONSTRAINT `payment_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `class` (
+  `class_id` int NOT NULL AUTO_INCREMENT,
+  `facility_id` int NOT NULL,
+  `class_name` varchar(45) NOT NULL,
+  `class_capacity` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`class_id`),
+  UNIQUE KEY `idclass_UNIQUE` (`class_id`),
+  KEY `class_facility_id_idx` (`facility_id`),
+  CONSTRAINT `class_facility_id` FOREIGN KEY (`facility_id`) REFERENCES `facility` (`facility_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `card` (
+  `card_id` int NOT NULL AUTO_INCREMENT,
+  `card_number` int NOT NULL,
+  `expiry_date` date NOT NULL,
+  `billing_address` varchar(200) NOT NULL,
+  `country` varchar(45) NOT NULL,
+  `cvc` int NOT NULL,
+  `city` varchar(45) NOT NULL,
+  `state` varchar(45) NOT NULL,
+  `postal` int NOT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`card_id`),
+  UNIQUE KEY `card_id_UNIQUE` (`card_id`),
+  KEY `card_user_id_idx` (`user_id`),
+  CONSTRAINT `card_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+CREATE TABLE `membership` (
+  `membership_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `date_of_expiry` date NOT NULL,
+  PRIMARY KEY (`membership_id`),
+  UNIQUE KEY `membership_id_UNIQUE` (`membership_id`),
+  KEY `user_id_idx` (`user_id`),
+  CONSTRAINT `membership_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+INSERT INTO user (first_name, last_name, password, email, date_of_birth, user_type) 
+VALUES 
+  ('John', 'Doe', 'password123', 'john.doe@example.com', '1990-05-10', 'manager'),
+  ('Jane', 'Doe', 'password456', 'jane.doe@example.com', '1995-02-14', 'employee'),
+  ('Bob', 'Smith', 'password789', 'bob.smith@example.com', '1985-09-01', 'customer'),
+  ('Alice', 'Johnson', 'passwordabc', 'alice.johnson@example.com', '2000-12-25', 'employee'),
+  ('David', 'Brown', 'passworddef', 'david.brown@example.com', '1978-07-18', 'manager'),
+  ('Sarah', 'Taylor', 'passwordegk', 'sarah.taylor@example.com', '1992-11-30', 'customer');
+
+INSERT INTO facility (start_time, end_time, facility_name, price, description) 
+VALUES
+  ('2023-04-01 08:00:00', '2023-04-01 09:00:00', 'basketball court', 7.00, 'Yoga'),
+  ('2023-04-01 09:00:00', '2023-04-01 10:00:00', 'basketball court', 7.00, 'Yoga'),
+  ('2023-04-01 10:00:00', '2023-04-01 11:00:00', 'basketball court', 7.00, 'basketball court'),
+  ('2023-04-01 11:00:00', '2023-04-01 12:00:00', 'basketball court', 7.00, 'basketball court'),
+  ('2023-04-01 13:00:00', '2023-04-01 14:00:00', 'tennis court', 7.00, 'Zumba'),
+  ('2023-04-01 14:00:00', '2023-04-01 15:00:00', 'tennis court', 7.00, 'Pilate'),
+  ('2023-04-01 15:00:00', '2023-04-01 16:00:00', 'tennis court', 7.00, 'tennis court'),
+  ('2023-04-01 16:00:00', '2023-04-01 17:00:00', 'tennis court', 7.00, 'tennis court'),
+  ('2023-04-01 17:00:00', '2023-04-01 18:00:00', 'tennis court', 7.00, 'Kung Fu'),
+  ('2023-04-01 18:00:00', '2023-04-01 19:00:00', 'gym', 7.00, 'Cycle Power'),
+  ('2023-04-01 19:00:00', '2023-04-01 20:00:00', 'gym', 7.00, 'gym'),
+  ('2023-04-01 20:00:00', '2023-04-01 21:00:00', 'gym', 7.00, 'gym'),
+  ('2023-04-01 21:00:00', '2023-04-01 22:00:00', 'gym', 7.00, 'Hilt'),
+  ('2023-04-02 08:00:00', '2023-04-02 09:00:00', 'gym', 7.00, 'gym'),
+  ('2023-04-02 09:00:00', '2023-04-02 10:00:00', 'gym', 7.00, 'gym'),
+  ('2023-04-02 10:00:00', '2023-04-02 11:00:00', 'gym', 7.00, 'Cycle Beat'),
+  ('2023-04-02 11:00:00', '2023-04-02 12:00:00', 'gym', 7.00, 'Body Combat'),
+  ('2023-04-02 12:00:00', '2023-04-02 13:00:00', 'gym', 7.00, 'gym'),
+  ('2023-04-02 13:00:00', '2023-04-02 14:00:00', 'gym', 7.00, 'Les Mills Step');
+
+INSERT INTO membership (user_id, date_of_expiry)
+VALUES 
+  ('1', '2024-08-01'),
+  ('2', '2024-09-01');
+
+INSERT INTO class (facility_id, class_name, class_capacity, price)
+VALUES 
+  ('1', 'yoga', '30', '0.00'),
+  ('2', 'yoga', '30', '0.00'),
+  ('5', 'zumba', '30', '0.00'),
+  ('6', 'pilates', '30', '0.00'),
+  ('9', 'Kung fu', '30', '0.00'),
+  ('10', 'cycle power', '30', '0.00'),
+  ('13, 'Hilt', '30', '0.00'),
+  ('16, 'Cycle Beat', '30', '5.00'),
+  ('17', 'body combat', '30', '0.00'),
+  ('18, 'Les Mills Step', '30', '5.00');
